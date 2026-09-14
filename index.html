@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>moonbitstack</title>
-<meta name="description" content="A full-stack web, services, data and systems toolkit for MoonBit.">
+<meta name="description" content="MoonBit libraries for web services, data access and distributed systems.">
 <link rel="icon" type="image/png" href="moonkits.png">
 <style>
   :root {
@@ -85,11 +85,10 @@
     <img src="moonkits.png" alt="moonbitstack logo">
     <div>
       <h1>moonbitstack</h1>
-      <p class="tagline">A full-stack web, services, data and systems toolkit for MoonBit.</p>
+      <p class="tagline">MoonBit libraries for web services, data access and distributed systems.</p>
       <p><span class="install"><code>moon add moonbitstack/moonapi</code></span></p>
       <p class="links">
         <a href="https://github.com/moonbitstack">GitHub</a>
-        <a href="https://mooncakes.io/api/v0/user/moonbitstack">mooncakes</a>
         <a href="https://www.moonbitlang.com/">MoonBit</a>
       </p>
     </div>
@@ -119,11 +118,11 @@
 </main>
 <script>
   const pkgs = [
-    ["web", "moonasgi", "ASGI 3.0 for MoonBit: the contract between servers and frameworks.", "ASGI specification", "moonasgi"],
+    ["web", "moonasgi", "ASGI 3.0: the interface between servers and frameworks.", "ASGI specification", "moonasgi"],
     ["web", "mooncat", "Native ASGI server with HTTP/1.1, HTTP/2 and WebSocket.", "uvicorn", "mooncat"],
     ["web", "moonapi", "Typed web framework with validation, dependency injection and OpenAPI 2.0, 3.0 and 3.1.", "FastAPI", "moonapi"],
     ["web", "moongql", "Code-first GraphQL with subscriptions and Apollo Federation.", "strawberry, GraphQL spec", "moongql"],
-    ["services", "moonrpc", "Real gRPC over a self-built HTTP/2 and HPACK stack, with reflection.", "grpc-go", "moonrpc"],
+    ["services", "moonrpc", "gRPC on its own HTTP/2 and HPACK implementation, with server reflection.", "grpc-go", "moonrpc"],
     ["services", "moonzero", "Microservice framework: config-driven assembly, resilience and service discovery.", "go-zero", "moonzero"],
     ["services", "moonctl", "Spec-driven code generator for the whole stack (the mctl command).", "goctl", "moonctl"],
     ["data", "moonorm", "ORM and SQL toolkit: query builder, sessions, relationships and migrations.", "SQLAlchemy 2.x", "moonorm"],
@@ -132,9 +131,9 @@
     ["data", "moonpostgres", "Pure-MoonBit PostgreSQL wire-protocol driver.", "asyncpg", "moonorm/postgres", "moonpostgres"],
     ["data", "moonmysql", "Pure-MoonBit MySQL and MariaDB wire-protocol driver.", "PyMySQL", "moonorm/mysql", "moonmysql"],
     ["systems", "moonkoog", "Agent orchestration: strategy graphs, tools, structured output and RAG.", "JetBrains Koog", "moonkoog"],
-    ["systems", "moonraft", "A line-by-line port of etcd-io/raft with 100% line and branch coverage.", "etcd-io/raft", "moonraft"],
+    ["systems", "moonraft", "A function-by-function port of etcd-io/raft, fully covered by tests.", "etcd-io/raft", "moonraft"],
     ["systems", "moonbase", "base16, base32, base36, base58, base62 and base64 codecs.", "RFC 4648", "moonbase"],
-    ["systems", "moonhelo", "End-to-end example wiring the stack into one running service.", null, null, null, "moonhelo"],
+    ["systems", "moonhelo", "An end-to-end example that runs the stack as one service.", null, null, null, "moonhelo"],
   ];
   for (const [group, name, desc, ref, docs, pkgName, repoName] of pkgs) {
     const repo = repoName ?? (docs ? docs.split("/")[0] : name);
