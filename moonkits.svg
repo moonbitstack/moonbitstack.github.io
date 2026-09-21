@@ -322,70 +322,82 @@
   </g>
 
   <g id="tech-modules">
-    <path d="
-      M 313 446
-      L 313 443
-      Q 313 437 320 433
-      L 331 427.7
-      Q 334 426 339 426
-      L 459 426
-      Q 465 426 469 429
-      L 479 437
-      Q 484 441 484 447
-      Z" fill="url(#purpleBevel)"/>
+    <!--
+      Painted bottom-up: the box above covers the one below, so the stack reads
+      as a stack. A lower box's lid shows only where the box on it does not
+      reach.
+    -->
 
-    <path d="M 325 435.5 L 474 435.5"
-          stroke="#CCB3FF"
-          stroke-opacity=".38"
-          stroke-width="2"/>
+    <g id="module-db">
+      <rect x="313" y="538"
+            width="171" height="50"
+            rx="12"
+            fill="url(#tealPaint)"/>
 
-    <rect x="313" y="437"
-          width="171" height="49"
-          rx="11"
-          fill="url(#purplePaint)"/>
+      <path d="M 320 539 H 477"
+            stroke="#8AE8D8"
+            stroke-opacity=".8"
+            stroke-width="3"
+            stroke-linecap="round"/>
+    </g>
 
-    <path d="M 324 483.5 H 473"
-          stroke="#4825CC"
-          stroke-opacity=".44"
-          stroke-width="3"
-          stroke-linecap="round"/>
+    <g id="module-code">
+      <path d="
+        M 313 498
+        L 313 493
+        Q 315 486 324 484
+        L 474 484
+        Q 482 486 484 494
+        L 484 498
+        Z" fill="#41BCFF"/>
 
-    <path d="
-      M 313 498
-      L 313 493
-      Q 315 486 324 484
-      L 474 484
-      Q 482 486 484 494
-      L 484 498
-      Z" fill="#41BCFF"/>
+      <rect x="313" y="490"
+            width="171" height="49"
+            rx="9"
+            fill="url(#bluePaint)"/>
 
-    <rect x="313" y="490"
-          width="171" height="49"
-          rx="9"
-          fill="url(#bluePaint)"/>
+      <path d="M 322 489 H 476"
+            stroke="#89DDFF"
+            stroke-opacity=".52"
+            stroke-width="2"
+            stroke-linecap="round"/>
 
-    <path d="M 322 489 H 476"
-          stroke="#89DDFF"
-          stroke-opacity=".52"
-          stroke-width="2"
-          stroke-linecap="round"/>
+      <path d="M 322 535.5 H 475"
+            stroke="#056BDB"
+            stroke-opacity=".55"
+            stroke-width="2.5"
+            stroke-linecap="round"/>
+    </g>
 
-    <rect x="313" y="538"
-          width="171" height="50"
-          rx="12"
-          fill="url(#tealPaint)"/>
+    <g id="module-cube">
+      <path d="
+        M 313 446
+        L 313 443
+        Q 313 437 320 433
+        L 331 427.7
+        Q 334 426 339 426
+        L 459 426
+        Q 465 426 469 429
+        L 479 437
+        Q 484 441 484 447
+        Z" fill="url(#purpleBevel)"/>
 
-    <path d="M 320 539 H 477"
-          stroke="#8AE8D8"
-          stroke-opacity=".8"
-          stroke-width="3"
-          stroke-linecap="round"/>
+      <path d="M 325 435.5 L 474 435.5"
+            stroke="#CCB3FF"
+            stroke-opacity=".38"
+            stroke-width="2"/>
 
-    <path d="M 322 535.5 H 475"
-          stroke="#056BDB"
-          stroke-opacity=".55"
-          stroke-width="2.5"
-          stroke-linecap="round"/>
+      <rect x="313" y="437"
+            width="171" height="49"
+            rx="11"
+            fill="url(#purplePaint)"/>
+
+      <path d="M 324 483.5 H 473"
+            stroke="#4825CC"
+            stroke-opacity=".44"
+            stroke-width="3"
+            stroke-linecap="round"/>
+    </g>
 
     <g id="cube-icon"
        transform="translate(398.5 461.5)"
