@@ -1,3 +1,12 @@
 .*
 !.git*
 !.nojekyll
+_*
+!src/styles/_*.scss
+node_modules/
+dist/
+*.lock
+*.lockb
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

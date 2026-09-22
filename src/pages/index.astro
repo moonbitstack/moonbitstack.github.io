@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro'
+import Install from '../components/react/Install'
+import Stack from '../components/solid/Index'
+import Theme from '../components/svelte/Theme.svelte'
+import Nav from '../components/vue/Nav.vue'
+import { counts } from '../data/packages'
+
+const tagline = 'MoonBit libraries for web services, data access and distributed systems.'
+---
+
+<Base title="moonbitstack" description={tagline}>
+  <header class="hero">
+    <img src="/moonkits.png" alt="moonbitstack logo" width="108" height="108" />
+    <div class="name">
+      <h1>moonbitstack</h1>
+      <p class="tagline">{tagline}</p>
+      <Install client:idle />
+      <p class="links">
+        <a href="https://github.com/moonbitstack">github</a>
+        <a href="https://mooncakes.io/assets/moonbitstack">mooncakes</a>
+        <a href="https://www.moonbitlang.com/">moonbit</a>
+        <Theme client:idle />
+      </p>
+    </div>
+    <p class="tally">
+      {counts.all} modules in all. {counts.published} are published. {counts.planned} have their design
+      settled and no code yet. Two are templates, there to be copied rather than added.
+    </p>
+  </header>
+
+  <div class="sheet">
+    <Nav client:idle />
+    <div class="body">
+      <Stack client:idle />
+    </div>
+  </div>
+
+  <footer>
+    Everything here is Apache-2.0, published on mooncakes under <code>moonbitstack/</code>, and
+    developed at <a href="https://github.com/moonbitstack">github.com/moonbitstack</a>. A module
+    marked <em>in design</em> has a repository and a written specification; the implementation has
+    not started.
+  </footer>
+</Base>

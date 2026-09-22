@@ -1,0 +1,30 @@
+// Palette taken off the organisation's own mark: the bunny is magenta on a
+// cool blue-white crate. So the paper is cool rather than cream, the ink is a
+// blue-black rather than a tinted near-black, and the magenta is spent on links
+// and nothing else.
+//
+// One declaration per colour: `light-dark()` reads `color-scheme`, so the theme
+// toggle only has to say which scheme is in force and every token follows.
+
+@mixin palette {
+  --paper: light-dark(#edf0f4, #12151f);
+  --sheet: light-dark(#f8f9fb, #171b27);
+  --ink: light-dark(#151a2b, #e6e8ee);
+  --soft: light-dark(#5c6374, #959cae);
+  --rule: light-dark(#d3d9e2, #272c3a);
+  --mark: light-dark(#9c2b5e, #f2a0c3);
+  --code: light-dark(#e2e7ee, #1c2130);
+}
+
+$page: 1140px;
+$rail: 184px;
+$gutter: 26px;
+
+// One text family for everything, because this page is a catalogue and a
+// catalogue is read, not scanned. Source Serif has a designed Simplified
+// Chinese companion in Source Han Serif, so the two scripts are one family
+// rather than two strangers side by side. Self-hosted: the font CDNs do not
+// reach half of this stack's readers.
+$text: 'Source Serif 4 Variable', 'Source Han Serif SC', 'Noto Serif CJK SC', 'Songti SC', Georgia,
+  serif;
+$mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
