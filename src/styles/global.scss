@@ -1,0 +1,377 @@
+@use 'tokens' as t;
+
+:root {
+  color-scheme: light dark;
+  @include t.palette;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  // The standard properties rather than the WebKit pseudo-elements: a thin bar
+  // in the page's own ink, a gutter that is there whether or not it is needed,
+  // so nothing shifts sideways when the catalogue is filtered down to one row.
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--soft) 42%, transparent) transparent;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-wrap: anywhere;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.7 t.$text;
+  -webkit-font-smoothing: antialiased;
+}
+
+code,
+kbd {
+  font-family: t.$mono;
+}
+
+a {
+  color: var(--mark);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+main {
+  max-width: t.$page;
+  margin: 0 auto;
+  padding: 0 t.$gutter 108px;
+}
+
+// The mark, the name, the one sentence, and the line you came here to copy.
+// Nothing else earns a place above the catalogue.
+.hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 25ch;
+  gap: 34px;
+  align-items: start;
+  padding: 76px 0 44px;
+
+  img {
+    width: 108px;
+    height: 108px;
+    border-radius: 27px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  .tagline {
+    margin: 12px 0 24px;
+    max-width: 44ch;
+    color: var(--soft);
+    font-size: 19px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin: 22px 0 0;
+    font-size: 16px;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.tally {
+  margin: 8px 0 0;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.55;
+  font-variant-numeric: oldstyle-nums;
+}
+
+.sheet {
+  display: grid;
+  grid-template-columns: t.$rail 1fr;
+  gap: 56px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+}
+
+.finder {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  transition: border-color 140ms ease;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    font: 400 21px/1.4 t.$text;
+    padding: 2px 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+
+    &::placeholder {
+      color: color-mix(in oklab, var(--soft) 65%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    border-bottom-color: var(--mark);
+  }
+
+  .count {
+    font-size: 14px;
+    color: var(--soft);
+    white-space: nowrap;
+    font-variant-numeric: oldstyle-nums;
+  }
+}
+
+.found {
+  padding-top: 34px;
+}
+
+.empty {
+  margin: 0;
+  color: var(--soft);
+  font-style: italic;
+}
+
+section[id] {
+  padding-top: 38px;
+
+  & + section[id] {
+    margin-top: 44px;
+    border-top: 1px solid var(--rule);
+  }
+
+  scroll-margin-top: 16px;
+}
+
+.layer {
+  margin-bottom: 30px;
+
+  h2 {
+    margin: 0;
+    font-size: 27px;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 6px 0 0;
+    max-width: 56ch;
+    color: var(--soft);
+    font-size: 16px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(268px, 100%), 1fr));
+  gap: 34px 44px;
+}
+
+// An entry in a catalogue: the name is the way in, everything under it is
+// what you needed to know before following it.
+.item {
+  h3 {
+    margin: 0 0 6px;
+    font-size: 21px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--mark);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .state {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--soft);
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  p {
+    margin: 0;
+    max-width: 40ch;
+    color: var(--soft);
+    font-size: 15.5px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .after {
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  // Sixty of these on one page, so they wait in the page's own grey and take
+  // the accent only when pointed at.
+  .more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 14.5px;
+
+    a {
+      color: var(--soft);
+      text-decoration: none;
+      transition: color 120ms ease;
+
+      &:hover {
+        color: var(--mark);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.unwritten {
+    h3 a {
+      color: var(--soft);
+    }
+
+    .state {
+      font-style: italic;
+      color: var(--mark);
+    }
+
+    p {
+      color: color-mix(in oklab, var(--soft) 80%, var(--paper));
+    }
+  }
+}
+
+.install {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+
+  code {
+    background: var(--code);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 14.5px;
+  }
+
+  button {
+    font: 400 14px/1 t.$text;
+    padding: 6px 4px;
+    border: 0;
+    background: transparent;
+    color: var(--soft);
+    cursor: pointer;
+    transition: color 140ms ease;
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+}
+
+footer {
+  margin-top: 84px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+  max-width: 64ch;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.6;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// While a query is live the catalogue steps aside: what you are reading is the
+// result, not the shelf it came off.
+:root[data-searching] .strata {
+  display: none;
+}
+
+@media (width <= 900px) {
+  .sheet {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 24px 0;
+    padding: 46px 0 34px;
+
+    img {
+      width: 78px;
+      height: 78px;
+      border-radius: 20px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    .tagline {
+      font-size: 17.5px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}

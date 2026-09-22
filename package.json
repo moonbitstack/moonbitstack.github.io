@@ -1,0 +1,32 @@
+{
+  "name": "moonbitstack.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/react": "^7.0.0",
+    "@astrojs/solid-js": "^7.0.2",
+    "@astrojs/svelte": "^9.0.1",
+    "@astrojs/vue": "^7.0.3",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro": "^7.3.3",
+    "pug": "^3.0.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sass": "^1.105.0",
+    "solid-js": "^1.9.15",
+    "svelte": "^5.57.1",
+    "svelte-preprocess": "^6.0.5",
+    "typescript": "^6.0.3",
+    "vue": "^3.5.43"
+  }
+}
