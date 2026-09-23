@@ -95,16 +95,16 @@ export const packages = [
   {
     name: 'moonhttp',
     group: 'net',
-    version: '0.10.0',
+    version: '0.11.0',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
     after: 'the HTTP family of RFCs',
   },
   {
     name: 'moontls',
     group: 'net',
-    version: '0.6.1',
-    blurb: 'The TLS 1.3 state machine. No sockets, and not one line of cryptography of its own.',
-    after: 'RFC 8446',
+    version: '0.7.0',
+    blurb: 'TLS 1.3 and DTLS 1.3, as state machines. No sockets, and not one line of cryptography of their own.',
+    after: 'RFC 8446 and RFC 9147',
   },
   {
     name: 'moonquic',
