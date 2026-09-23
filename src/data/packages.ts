@@ -116,7 +116,8 @@ export const packages = [
   {
     name: 'moonnet',
     group: 'net',
-    blurb: 'The contract the three state machines are reached through, and the wiring that connects them.',
+    blurb: 'The contract those state machines are reached through, the wiring between them, and the layers WebRTC is made of: SDP, STUN, ICE, RTP, SRTP, SCTP and WebSocket.',
+    after: 'pion/webrtc, layer for layer',
   },
   {
     name: 'moonrpc',
@@ -220,7 +221,7 @@ export const packages = [
     group: 'format',
     version: '0.2.0',
     blurb: 'JSON Schema validation across all five drafts. It validates; it does not parse.',
-    after: 'the JSON Schema test suite',
+    after: 'the JSON Schema specification',
   },
   {
     name: 'moonxml',
@@ -240,8 +241,7 @@ export const packages = [
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'base16, base32, base36, base58, base62 and base64.',
-    after: 'RFC 4648',
+    blurb: 'base16, base32 and base64 from RFC 4648, plus base36, base58 and base62.',
   },
   {
     name: 'moonvar',
@@ -277,7 +277,6 @@ export const packages = [
     group: 'base',
     version: '0.1.0',
     blurb: 'A level, a message, fields carried as values, and a seam to write through. Zero dependencies.',
-    after: 'structlog',
   },
   {
     name: 'moonpool',
@@ -307,8 +306,8 @@ export const packages = [
     name: 'moonetui',
     group: 'ui',
     version: '0.1.1',
-    blurb: 'Terminal user interfaces: layout, widgets and input.',
-    after: 'ratatui',
+    blurb: 'Terminal user interfaces: cell buffers, diffed output, layout, widgets and drivers.',
+    after: 'Textual',
   },
   {
     name: 'moonegui',
