@@ -77,7 +77,7 @@ export const packages = [
     version: '0.9.0',
     docs: 'moongql',
     blurb: 'Code-first GraphQL with subscriptions and Apollo Federation.',
-    after: 'strawberry',
+    after: 'strawberry, and the GraphQL specification',
   },
   {
     name: 'moonfetch',
@@ -97,7 +97,7 @@ export const packages = [
     group: 'net',
     version: '0.10.0',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
-    after: 'RFC 9110 to 9113',
+    after: 'the HTTP family of RFCs',
   },
   {
     name: 'moontls',
@@ -116,8 +116,13 @@ export const packages = [
   {
     name: 'moonnet',
     group: 'net',
-    blurb: 'The contract those state machines are reached through, the wiring between them, and the layers WebRTC is made of: SDP, STUN, ICE, RTP, SRTP, SCTP and WebSocket.',
-    after: 'pion/webrtc, layer for layer',
+    blurb: 'The contract those state machines are reached through, and the wiring that connects them.',
+  },
+  {
+    name: 'moonrtc',
+    group: 'net',
+    blurb: 'The WebRTC stack, layer by layer: SDP, STUN, TURN, ICE, RTP, RTCP, SRTP and SCTP, with no socket in any of them.',
+    after: 'pion/webrtc and aiortc',
   },
   {
     name: 'moonrpc',
@@ -199,8 +204,7 @@ export const packages = [
     name: 'moonjson',
     group: 'format',
     version: '0.4.0',
-    blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
-    after: 'RFC 8259',
+    blurb: 'One tree, several ways of writing it: JSON (RFC 8259), JSONC, JSON5 and JSON Lines.',
   },
   {
     name: 'moonyaml',
@@ -230,11 +234,16 @@ export const packages = [
     after: 'lxml and BeautifulSoup',
   },
   {
+    name: 'moonmedia',
+    group: 'format',
+    blurb: 'Streaming containers and playlists: m3u8, MPD, MPEG-TS and fragmented MP4, plus the RTMP ingest protocol.',
+    after: 'RFC 8216 and ISO/IEC 23009-1',
+  },
+  {
     name: 'moonzip',
     group: 'format',
     version: '0.3.0',
-    blurb: 'DEFLATE, the two stream containers built on it, and the ZIP archive.',
-    after: 'RFC 1950 to 1952',
+    blurb: 'DEFLATE and the two stream containers built on it (RFC 1950 to 1952), plus the ZIP archive.',
   },
   {
     name: 'moonbase',
@@ -256,14 +265,14 @@ export const packages = [
     group: 'base',
     version: '0.3.1',
     blurb: 'Hashes, MACs, ciphers, AEAD, key agreement and signatures — one algorithm to a package.',
-    after: 'the FIPS and RFC specifications',
+    after: 'hashlib, hmac and the RustCrypto crates',
   },
   {
     name: 'mooncred',
     group: 'base',
     version: '0.6.1',
     blurb: 'Credential formats: JSON Web Tokens, the keys they are verified with, ASN.1 and X.509.',
-    after: 'RFC 7519',
+    after: 'the JOSE, ASN.1 and PKIX specifications',
   },
   {
     name: 'moondate',
