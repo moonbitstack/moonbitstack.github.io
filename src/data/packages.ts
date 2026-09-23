@@ -102,7 +102,7 @@ export const packages = [
   {
     name: 'moontls',
     group: 'net',
-    version: '0.7.0',
+    version: '0.8.0',
     blurb: 'TLS 1.3 and DTLS 1.3, as state machines. No sockets, and not one line of cryptography of their own.',
     after: 'RFC 8446 and RFC 9147',
   },
