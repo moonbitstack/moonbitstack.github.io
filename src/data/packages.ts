@@ -252,7 +252,7 @@ export const packages = [
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'base16, base32, base36, base58, base62 and base64.',
+    blurb: 'Every base encoding worth having: base16 through base64, bech32, base58check, multibase.',
     after: 'RFC 4648, and the alphabets that grew up outside it',
   },
   {
@@ -316,7 +316,7 @@ export const packages = [
     group: 'systems',
     version: '0.6.1',
     docs: 'moonkoog',
-    blurb: 'Agent orchestration: strategy graphs, tools, structured output and retrieval.',
+    blurb: 'Agent orchestration: strategy graphs, tools, structured output, retrieval and MCP.',
     after: 'JetBrains Koog',
   },
 
