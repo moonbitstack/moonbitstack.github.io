@@ -9,6 +9,7 @@ export type GroupId =
   | 'base'
   | 'systems'
   | 'ui'
+  | 'infer'
   | 'start'
 
 export interface Group {
@@ -41,6 +42,7 @@ export const groups = [
   { id: 'data', title: 'Data', note: 'One interface, three drivers that speak the wire themselves, and the mapper above them.' },
   { id: 'systems', title: 'Systems', note: 'Replication, and agents that plan before they act.' },
   { id: 'ui', title: 'Interfaces', note: 'Two toolkits: one draws in a terminal, one draws pixels.' },
+  { id: 'infer', title: 'Inference', note: 'Running a model, and the four libraries that make it possible.' },
   { id: 'format', title: 'Formats', note: 'Text and binary formats, read and written back.' },
   { id: 'base', title: 'Foundations', note: 'What everything above is allowed to depend on.' },
   { id: 'start', title: 'Starting points', note: 'Copied rather than added.' },
@@ -335,6 +337,34 @@ export const packages = [
     after: 'egui',
   },
 
+  {
+    name: 'mooninfer',
+    group: 'infer',
+    blurb: 'Run a model: weights, a KV cache, sampling, and a server to put it behind.',
+  },
+  {
+    name: 'moonggml',
+    group: 'infer',
+    blurb: 'Tensors, the graph built from them, and the schedule that runs it on CPU or GPU.',
+    after: 'ggml',
+  },
+  {
+    name: 'moonwgpu',
+    group: 'infer',
+    blurb: 'The WebGPU API: one surface over the browser’s own and a native backend.',
+    after: 'the WebGPU and WGSL specifications',
+  },
+  {
+    name: 'moongguf',
+    group: 'infer',
+    blurb: 'GGUF model files: the header, the metadata table and the tensor index.',
+    after: 'the GGUF specification',
+  },
+  {
+    name: 'moontoken',
+    group: 'infer',
+    blurb: 'Text into tokens and back: byte-level BPE and the SentencePiece shape.',
+  },
   {
     name: 'moonkit',
     group: 'start',
