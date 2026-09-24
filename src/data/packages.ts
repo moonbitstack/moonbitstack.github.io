@@ -237,7 +237,7 @@ export const packages = [
   {
     name: 'moonmedia',
     group: 'format',
-    blurb: 'Playlists and containers for segmented streaming: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
+    blurb: 'Streaming playlists and containers: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
     after: 'RFC 8216 and ISO/IEC 23009-1',
   },
   {
@@ -294,7 +294,7 @@ export const packages = [
     name: 'moonlog',
     group: 'base',
     version: '0.1.0',
-    blurb: 'A level, a message, fields carried as values, and a seam to write through. Zero dependencies.',
+    blurb: 'A level, a message, fields carried as values, and a seam to write through.',
   },
   {
     name: 'moonpool',
@@ -331,7 +331,7 @@ export const packages = [
     name: 'moonegui',
     group: 'ui',
     version: '0.2.0',
-    blurb: 'Immediate-mode graphical interfaces: the whole screen is redrawn each frame from the state.',
+    blurb: 'Immediate-mode graphical interfaces: one frame, one pass over the state.',
     after: 'egui',
   },
 
