@@ -205,7 +205,6 @@ export const packages = [
     group: 'format',
     version: '0.4.0',
     blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
-    after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
@@ -245,15 +244,13 @@ export const packages = [
     group: 'format',
     version: '0.3.0',
     blurb: 'DEFLATE, the two stream containers built on it, and the ZIP archive.',
-    after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
   {
     name: 'moonbase',
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'Every base encoding worth having: base16 through base64, bech32, base58check, multibase.',
-    after: 'RFC 4648, and the alphabets that grew up outside it',
+    blurb: 'base16, base32, base36, base58, base62 and base64, then bech32, base58check and multibase.',
   },
   {
     name: 'moonvar',
