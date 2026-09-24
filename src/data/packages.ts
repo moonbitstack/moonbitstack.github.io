@@ -103,7 +103,7 @@ export const packages = [
     name: 'moontls',
     group: 'net',
     version: '0.8.0',
-    blurb: 'TLS 1.3 and DTLS 1.3 as state machines, with not one line of cryptography of their own.',
+    blurb: 'TLS 1.3 and DTLS 1.3, as state machines. No sockets, and not one line of cryptography of their own.',
     after: 'RFC 8446 and RFC 9147',
   },
   {
@@ -204,7 +204,8 @@ export const packages = [
     name: 'moonjson',
     group: 'format',
     version: '0.4.0',
-    blurb: 'One tree, several ways of writing it: JSON (RFC 8259), JSONC, JSON5 and JSON Lines.',
+    blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
+    after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
@@ -243,14 +244,16 @@ export const packages = [
     name: 'moonzip',
     group: 'format',
     version: '0.3.0',
-    blurb: 'DEFLATE, zlib and gzip (RFC 1950 to 1952), and the ZIP archive.',
+    blurb: 'DEFLATE, the zlib and gzip containers built on it, and the ZIP archive.',
+    after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
   {
     name: 'moonbase',
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'base16, base32 and base64 (RFC 4648), then base36, base58, base62, bech32 and multibase.',
+    blurb: 'base16, base32, base36, base58, base62 and base64, then bech32, base58check and multibase.',
+    after: 'RFC 4648, and the alphabets that grew up outside it',
   },
   {
     name: 'moonvar',
