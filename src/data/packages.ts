@@ -204,7 +204,7 @@ export const packages = [
     name: 'moonjson',
     group: 'format',
     version: '0.4.0',
-    blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
+    blurb: 'One tree, several ways of writing it: JSON (RFC 8259), JSONC, JSON5 and JSON Lines.',
   },
   {
     name: 'moonyaml',
@@ -243,14 +243,14 @@ export const packages = [
     name: 'moonzip',
     group: 'format',
     version: '0.3.0',
-    blurb: 'DEFLATE, the two stream containers built on it, and the ZIP archive.',
+    blurb: 'DEFLATE, zlib and gzip (RFC 1950 to 1952), and the ZIP archive.',
   },
   {
     name: 'moonbase',
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'base16, base32, base36, base58, base62 and base64, then bech32, base58check and multibase.',
+    blurb: 'base16, base32 and base64 (RFC 4648), then base36, base58, base62, bech32 and multibase.',
   },
   {
     name: 'moonvar',
