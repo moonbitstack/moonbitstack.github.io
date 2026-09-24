@@ -82,14 +82,14 @@ export const packages = [
   {
     name: 'moonfetch',
     group: 'web',
-    blurb: 'HTTP client: one spelling for the blocking call and the awaited one, on both hosts.',
+    blurb: 'HTTP client: the blocking call and the awaited one are spelled the same.',
     after: 'requests and aiohttp',
   },
   {
     name: 'moonpug',
     group: 'web',
-    blurb: 'Template engine taking the union of four template languages, spelled the way Jinja2 spells it.',
-    after: 'Jinja2, Django templates, Pug and Fumi',
+    blurb: 'Every feature of four template languages, spelled the way Jinja2 spells it.',
+    after: 'Jinja2, Django templates, Pug and Slim',
   },
 
   {
@@ -103,7 +103,7 @@ export const packages = [
     name: 'moontls',
     group: 'net',
     version: '0.8.0',
-    blurb: 'TLS 1.3 and DTLS 1.3, as state machines. No sockets, and not one line of cryptography of their own.',
+    blurb: 'TLS 1.3 and DTLS 1.3 as state machines, with not one line of cryptography of their own.',
     after: 'RFC 8446 and RFC 9147',
   },
   {
@@ -116,12 +116,12 @@ export const packages = [
   {
     name: 'moonnet',
     group: 'net',
-    blurb: 'The contract those state machines are reached through, and the wiring that connects them.',
+    blurb: 'The shared contract over HTTP, TLS and QUIC, and the wiring that puts them on a socket.',
   },
   {
     name: 'moonrtc',
     group: 'net',
-    blurb: 'The WebRTC stack, layer by layer: SDP, STUN, TURN, ICE, RTP, RTCP, SRTP and SCTP, with no socket in any of them.',
+    blurb: 'The WebRTC stack, layer by layer: SDP, STUN, ICE, RTP, SRTP and the data channel.',
     after: 'pion/webrtc and aiortc',
   },
   {
@@ -196,7 +196,7 @@ export const packages = [
   {
     name: 'moonmodel',
     group: 'data',
-    blurb: 'One field description, several projections: validation, OpenAPI, SDL and DDL from the same declaration.',
+    blurb: 'One field description, several projections: validation, OpenAPI, SDL and DDL.',
     after: 'Pydantic',
   },
 
@@ -204,7 +204,8 @@ export const packages = [
     name: 'moonjson',
     group: 'format',
     version: '0.4.0',
-    blurb: 'One tree, several ways of writing it: JSON (RFC 8259), JSONC, JSON5 and JSON Lines.',
+    blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
+    after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
@@ -236,21 +237,23 @@ export const packages = [
   {
     name: 'moonmedia',
     group: 'format',
-    blurb: 'Streaming containers and playlists: m3u8, MPD, MPEG-TS and fragmented MP4, plus the RTMP ingest protocol.',
+    blurb: 'Playlists and containers for segmented streaming: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
     after: 'RFC 8216 and ISO/IEC 23009-1',
   },
   {
     name: 'moonzip',
     group: 'format',
     version: '0.3.0',
-    blurb: 'DEFLATE and the two stream containers built on it (RFC 1950 to 1952), plus the ZIP archive.',
+    blurb: 'DEFLATE, the two stream containers built on it, and the ZIP archive.',
+    after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
   {
     name: 'moonbase',
     group: 'format',
     version: '0.4.0',
     docs: 'moonbase',
-    blurb: 'base16, base32 and base64 from RFC 4648, plus base36, base58 and base62.',
+    blurb: 'base16, base32, base36, base58, base62 and base64.',
+    after: 'RFC 4648, and the alphabets that grew up outside it',
   },
   {
     name: 'moonvar',
@@ -270,7 +273,7 @@ export const packages = [
   {
     name: 'moonseal',
     group: 'base',
-    blurb: 'Seal a file for several people at once; any one of them opens it. A header of recipient stanzas over a streaming payload.',
+    blurb: 'Seal a file for several people at once; any one of them opens it.',
     after: 'age',
   },
   {
@@ -328,7 +331,7 @@ export const packages = [
     name: 'moonegui',
     group: 'ui',
     version: '0.2.0',
-    blurb: 'Immediate-mode graphical interfaces.',
+    blurb: 'Immediate-mode graphical interfaces: the whole screen is redrawn each frame from the state.',
     after: 'egui',
   },
 
