@@ -268,6 +268,12 @@ export const packages = [
     after: 'hashlib, hmac and the RustCrypto crates',
   },
   {
+    name: 'moonseal',
+    group: 'base',
+    blurb: 'Seal a file for several people at once; any one of them opens it. A header of recipient stanzas over a streaming payload.',
+    after: 'age',
+  },
+  {
     name: 'mooncred',
     group: 'base',
     version: '0.6.1',
