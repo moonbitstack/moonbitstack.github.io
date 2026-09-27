@@ -243,10 +243,10 @@ export const packages = [
     after: 'RFC 8216 and ISO/IEC 23009-1',
   },
   {
-    name: 'moonre',
+    name: 'moonregex',
     group: 'format',
-    blurb: 'The regular expressions JavaScript means — and so JSON Schema and OpenAPI too.',
-    after: 'ECMA-262 §22.2',
+    blurb: 'Python’s re, the regex superset behind it, and the dialect JSON Schema means.',
+    after: 'Python’s re, mrab-regex, and ECMA-262 §22.2',
   },
   {
     name: 'moonfory',
