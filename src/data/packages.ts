@@ -45,7 +45,7 @@ export const groups = [
   { id: 'infer', title: 'Inference', note: 'Running a model, and the four libraries underneath it.' },
   { id: 'format', title: 'Formats', note: 'Text and binary formats, read and written back.' },
   { id: 'base', title: 'Foundations', note: 'What everything above is allowed to depend on.' },
-  { id: 'start', title: 'Starting points', note: 'Copied rather than added.' },
+  { id: 'start', title: 'Beginning', note: 'Copied rather than added.' },
 ] as const satisfies readonly Group[]
 
 export const packages = [
@@ -99,7 +99,7 @@ export const packages = [
     group: 'net',
     version: '0.11.0',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
-    after: 'the HTTP family of RFCs',
+    after: 'the HTTP family of RFCs, and ylong_http',
   },
   {
     name: 'moontls',
@@ -241,6 +241,18 @@ export const packages = [
     group: 'format',
     blurb: 'Streaming playlists and containers: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
     after: 'RFC 8216 and ISO/IEC 23009-1',
+  },
+  {
+    name: 'moonre',
+    group: 'format',
+    blurb: 'The regular expressions JavaScript means — and so JSON Schema and OpenAPI too.',
+    after: 'ECMA-262 §22.2',
+  },
+  {
+    name: 'moonfory',
+    group: 'format',
+    blurb: 'A value written so that Java, Go or Python reads it back as its own.',
+    after: 'Apache Fory',
   },
   {
     name: 'moonzip',
