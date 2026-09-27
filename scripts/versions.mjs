@@ -1,7 +1,10 @@
-// Put the version mooncakes reports into the catalogue, so a release elsewhere
-// does not need an edit here.
+// Refresh `src/data/versions.json` from mooncakes.
 //
-// The build runs this before Astro, and `versions.yml` runs it to open a pull
+// The catalogue no longer carries a version, so this writes one file and one
+// file only — there is nothing in it but names and numbers, and no way for it
+// to disturb a group, a blurb or an entry that is still in design.
+//
+// The build runs it before Astro, and `versions.yml` runs it to open a pull
 // request, so the page is right at once and the file catches up behind it.
 //
 // Usage: node scripts/versions.mjs [--check]
@@ -9,11 +12,12 @@
 
 import { readFile, writeFile } from 'node:fs/promises'
 
-const DATA = new URL('../src/data/packages.ts', import.meta.url)
+const CATALOGUE = new URL('../src/data/packages.ts', import.meta.url)
+const VERSIONS = new URL('../src/data/versions.json', import.meta.url)
 const ORG = 'moonbitstack'
-// One catalogue entry, brace to brace. Working an entry at a time is what keeps
-// a rewrite inside the module it is about.
-const ENTRY = /\{\n\s*name: '([a-z0-9]+)',\n(?:[^{}]*\n)*?\s*\}/g
+// One catalogue entry, brace to brace, read only for its name and whether it is
+// one of the two that are in the catalogue and not in the registry.
+const ENTRY = /\{\r?\n\s*name: '([a-z0-9]+)',\r?\n(?:[^{}]*\r?\n)*?\s*\}/g
 // Thirty-one at once comes back throttled; four at a time does not.
 const AT_ONCE = 4
 
@@ -39,89 +43,58 @@ async function all(names) {
   return out
 }
 
-/** The text with every version line taken out, so two of these differing means
- *  something other than a version moved — added, changed or removed. */
-const skeleton = text => text.replace(/^[ \t]*version: '[^']*',?\n/gm, '')
-
 const check = process.argv.includes('--check')
-const raw = await readFile(DATA, 'utf8')
-// Read in one line ending and write back in the one that was there, so a
-// checkout with autocrlf on behaves like the one CI gets.
-const crlf = raw.includes('\r\n')
-const source = crlf ? raw.replaceAll('\r\n', '\n') : raw
+const catalogue = await readFile(CATALOGUE, 'utf8')
+const known = JSON.parse(await readFile(VERSIONS, 'utf8'))
 
-const entries = [...source.matchAll(ENTRY)].map(match => ({
-  text: match[0],
-  name: match[1],
-  version: /\n\s*version: '([^']*)'/.exec(match[0])?.[1] ?? null,
-  // The template and the worked example are in the catalogue and not in the
-  // registry. Nothing published under their names should give them a version.
-  listed: !/\n\s*unpublished:/.test(match[0]),
-}))
+// The template and the worked example are in the catalogue and not in the
+// registry. Nothing published under their names should give them a version.
+const names = [...catalogue.matchAll(ENTRY)]
+  .filter(([text]) => !/\r?\n\s*unpublished:/.test(text))
+  .map(([, name]) => name)
 
 // Every entry must have been read. One that was not is an entry shaped some
 // other way, and skipping it quietly is how it stays stale.
-const declared = (source.match(/name: '[a-z0-9]+',/g) ?? []).length
-if (entries.length !== declared) {
-  console.error(
-    `::error::${declared} entries are declared and ${entries.length} were read — ` +
-      'the catalogue no longer has the shape this script reads',
-  )
+const declared = (catalogue.match(/name: '[a-z0-9]+',/g) ?? []).length
+if ([...catalogue.matchAll(ENTRY)].length !== declared) {
+  console.error(`::error::${declared} entries are declared and fewer were read`)
   process.exit(1)
 }
 
-const asked = entries.filter(entry => entry.listed)
-const live = await all(asked.map(entry => entry.name))
+const live = await all(names)
 
-let out = source
+const next = {}
 const moved = []
-const added = []
 const silent = []
-
-asked.forEach((entry, i) => {
+names.forEach((name, i) => {
   const now = live[i]
   if (now === null) {
     // A module the registry will not name keeps whatever is written down, so a
     // registry that is down costs freshness and nothing else.
-    if (entry.version !== null) silent.push(entry.name)
+    if (known[name]) {
+      next[name] = known[name]
+      silent.push(name)
+    }
     return
   }
-  if (now === entry.version) return
-
-  let next
-  if (entry.version === null) {
-    // It was in design and has since been published: give it the line it now
-    // deserves, under the group so the field order stays the file's.
-    added.push(`${entry.name} ${now} (was in design)`)
-    next = entry.text.replace(/(\n(\s*)group: '[a-z]+',)/, `$1\n$2version: '${now}',`)
-    if (next === entry.text) {
-      console.error(`::error::${entry.name} has no group line to put a version after`)
-      process.exit(1)
-    }
-  } else {
-    moved.push(`${entry.name} ${entry.version} → ${now}`)
-    next = entry.text.replace(/(\n\s*version: ')[^']*/, `$1${now}`)
-  }
-  out = out.replace(entry.text, next)
+  next[name] = now
+  if (known[name] !== now) moved.push(`${name} ${known[name] ?? '(in design)'} → ${now}`)
 })
 
-// Nothing but a version line may have changed. A catalogue whose groups or
-// blurbs moved under an automated edit is worse than one with a stale number.
-if (skeleton(out) !== skeleton(source)) {
-  console.error('::error::the rewrite touched something that is not a version')
-  process.exit(1)
+for (const name of Object.keys(known)) {
+  if (!(name in next)) moved.push(`${name} ${known[name]} → gone`)
 }
 
 if (silent.length > 0) console.log(`no answer for ${silent.join(', ')} — kept as written`)
-for (const line of added) console.log(line)
 for (const line of moved) console.log(line)
 
-if (added.length + moved.length === 0) {
-  console.log(`every version is current (${asked.length} modules)`)
+if (moved.length === 0) {
+  console.log(`every version is current (${names.length} modules)`)
   process.exit(0)
 }
 if (check) {
-  console.error(`${added.length + moved.length} stale — run node scripts/versions.mjs`)
+  console.error(`${moved.length} stale — run node scripts/versions.mjs`)
   process.exit(1)
 }
-await writeFile(DATA, crlf ? out.replaceAll('\n', '\r\n') : out)
+const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)))
+await writeFile(VERSIONS, JSON.stringify(sorted, null, 2) + '\n')

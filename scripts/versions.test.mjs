@@ -1,7 +1,4 @@
-// What `versions.mjs` must do to the catalogue, and what it must refuse to do.
-//
-// It edits a file that decides what the site says about forty-eight modules, so
-// the shapes it can meet are worth stating rather than assuming:
+// What `versions.mjs` must do, and what it must not touch.
 //
 //   node --test scripts/versions.test.mjs
 //
@@ -11,73 +8,85 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFile } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { promisify } from 'node:util'
 import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
 
 const run = promisify(execFile)
-const DATA = new URL('../src/data/packages.ts', import.meta.url)
 const SCRIPT = fileURLToPath(new URL('./versions.mjs', import.meta.url))
-const original = readFileSync(DATA)
+const CATALOGUE = new URL('../src/data/packages.ts', import.meta.url)
+const VERSIONS = new URL('../src/data/versions.json', import.meta.url)
 
-/** Run the script over a catalogue bent into some shape, then put it back. */
-async function against(bent) {
-  writeFileSync(DATA, bent)
+const catalogue = readFileSync(CATALOGUE)
+const versions = readFileSync(VERSIONS)
+const current = JSON.parse(versions.toString())
+
+/** Run the script over files bent into some shape, then put them back. */
+async function against({ list, known } = {}) {
+  if (list !== undefined) writeFileSync(CATALOGUE, list)
+  if (known !== undefined) writeFileSync(VERSIONS, known)
+  let result
   try {
     const { stdout, stderr } = await run(process.execPath, [SCRIPT])
-    return { code: 0, out: stdout + stderr, after: readFileSync(DATA) }
+    result = { code: 0, out: stdout + stderr }
   } catch (e) {
-    return { code: e.code ?? 1, out: (e.stdout ?? '') + (e.stderr ?? ''), after: readFileSync(DATA) }
-  } finally {
-    writeFileSync(DATA, original)
+    result = { code: e.code ?? 1, out: (e.stdout ?? '') + (e.stderr ?? '') }
   }
+  result.list = readFileSync(CATALOGUE)
+  result.known = JSON.parse(readFileSync(VERSIONS, 'utf8'))
+  writeFileSync(CATALOGUE, catalogue)
+  writeFileSync(VERSIONS, versions)
+  return result
 }
 
-const text = original.toString()
-const RAFT = "    name: 'moonraft',\n    group: 'systems',\n    version: '0.7.0',\n"
+const withRaft = value => {
+  const out = { ...current }
+  if (value === null) delete out.moonraft
+  else out.moonraft = value
+  return JSON.stringify(out, null, 2) + '\n'
+}
 
-test('a released version that moved on is taken up', async () => {
-  const stale = text.replace(RAFT, RAFT.replace("'0.7.0'", "'0.6.0'"))
-  const { code, out, after } = await against(stale)
+test('the catalogue is never written to', async () => {
+  const { code, list } = await against({ known: withRaft('0.0.1') })
   assert.equal(code, 0)
-  assert.match(out, /moonraft 0\.6\.0/)
-  assert.equal(after.toString(), text)
+  assert.deepEqual(list, catalogue)
 })
 
-test('a module that was in design and is now published gains the line', async () => {
-  const none = text.replace(RAFT, "    name: 'moonraft',\n    group: 'systems',\n")
-  const { code, out, after } = await against(none)
+test('a version that moved on is taken up', async () => {
+  const { code, out, known } = await against({ known: withRaft('0.0.1') })
   assert.equal(code, 0)
-  assert.match(out, /was in design/)
-  assert.equal(after.toString(), text)
+  assert.match(out, /moonraft 0\.0\.1/)
+  assert.equal(known.moonraft, current.moonraft)
+})
+
+test('a module that was in design and is now published gains an entry', async () => {
+  const { code, out, known } = await against({ known: withRaft(null) })
+  assert.equal(code, 0)
+  assert.match(out, /in design/)
+  assert.equal(known.moonraft, current.moonraft)
 })
 
 test('the template and the worked example are never given a version', async () => {
-  const { code, out } = await against(original)
+  const { code, out, known } = await against()
   assert.equal(code, 0)
   assert.doesNotMatch(out, /moonkit|moonhelo/)
+  assert.ok(!('moonkit' in known))
+  assert.ok(!('moonhelo' in known))
 })
 
 test('an entry written some other way is refused, not skipped', async () => {
-  const bent = text.replace(
-    "  {\n    name: 'moonraft',\n    group: 'systems',",
-    "  { name: 'moonraft', group: 'systems',",
-  )
-  const { code, out } = await against(bent)
+  const bent = catalogue
+    .toString()
+    .replace(
+      "  {\n    name: 'moonraft',\n    group: 'systems',",
+      "  { name: 'moonraft', group: 'systems',",
+    )
+  const { code, out } = await against({ list: bent })
   assert.equal(code, 1)
-  assert.match(out, /no longer has the shape/)
+  assert.match(out, /entries are declared/)
 })
 
-test('a catalogue in CRLF reads the same and stays CRLF', async () => {
-  const { code, after } = await against(text.replaceAll('\n', '\r\n'))
+test('a catalogue in CRLF reads the same', async () => {
+  const { code, out } = await against({ list: catalogue.toString().replaceAll('\n', '\r\n') })
   assert.equal(code, 0)
-  assert.ok(after.toString().includes('\r\n'))
-})
-
-test('only a version line may move', () => {
-  const skeleton = t => t.replace(/^[ \t]*version: '[^']*',?\n/gm, '')
-  const base = "  name: 'x',\n  group: 'net',\n  version: '1.0.0',\n  blurb: 'b',\n"
-  assert.equal(skeleton(base), skeleton(base.replace('1.0.0', '2.0.0')))
-  assert.equal(skeleton(base), skeleton(base.replace("  version: '1.0.0',\n", '')))
-  assert.notEqual(skeleton(base), skeleton(base.replace("'net'", "'web'")))
-  assert.notEqual(skeleton(base), skeleton(base + "  docs: 'x',\n"))
+  assert.doesNotMatch(out, /entries are declared/)
 })

@@ -34,18 +34,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- src/data/packages.ts; then
+          if git diff --quiet -- src/data/versions.json; then
             echo "nothing moved"; exit 0
           fi
-          # Only the catalogue may change. Anything else means the script did
+          # Only the version file may change. Anything else means the script did
           # something it was not asked to, and a pull request would carry it.
-          if [ -n "$(git diff --name-only -- . ':!src/data/packages.ts')" ]; then
-            echo "::error::something outside the catalogue changed"; git diff --stat; exit 1
+          if [ -n "$(git diff --name-only -- . ':!src/data/versions.json')" ]; then
+            echo "::error::something outside the version file changed"; git diff --stat; exit 1
           fi
           git config user.name "moonbitstack-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -B bot/versions
-          git commit -sm "chore(site): follow the versions mooncakes reports." -- src/data/packages.ts
+          git commit -sm "chore(site): follow the versions mooncakes reports." -- src/data/versions.json
           git push --force origin bot/versions
           if [ -z "$(gh pr list --head bot/versions --state open --json number --jq '.[].number')" ]; then
             gh pr create --head bot/versions --base main \
