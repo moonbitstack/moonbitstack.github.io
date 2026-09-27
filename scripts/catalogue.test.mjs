@@ -1,6 +1,6 @@
 // What `catalogue.mjs` must do, and what it must not touch.
 //
-//   node --test scripts/versions.test.mjs
+//   node --test scripts/catalogue.test.mjs
 //
 // The registry and GitHub are real here on purpose — a fake one would only
 // prove the fake. They are also why this is not in the pages pipeline: a
