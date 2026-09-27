@@ -1,8 +1,15 @@
 name: pages
 
+# A release in any module repository sends `released` here, which rebuilds the
+# page with the version mooncakes now reports. The half-monthly run is the
+# fallback for a release that could not send one.
 on:
   push:
     branches: [main]
+  repository_dispatch:
+    types: [released]
+  schedule:
+    - cron: "40 3 1,16 * *"
   workflow_dispatch:
 
 permissions:
@@ -23,6 +30,10 @@ jobs:
         with:
           node-version: 24
       - run: npm install --no-audit --no-fund
+      # Nothing is committed back: the file holds the last version written down
+      # and this replaces it for the build, so a registry that is down costs
+      # freshness and not a red pipeline.
+      - run: node scripts/versions.mjs
       - run: npx astro check
       - run: npx astro build
       - uses: actions/upload-pages-artifact@v4
