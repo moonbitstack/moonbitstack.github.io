@@ -1,0 +1,58 @@
+name: catalogue
+
+# The page already takes its versions from mooncakes at build time, so it is
+# never stale. This is what stops the files behind it from drifting: a version
+# that moved on, or a repository in the organisation that no entry names. One
+# pull request, reused, so a month of releases is one review.
+on:
+  repository_dispatch:
+    types: [released]
+  schedule:
+    - cron: "10 4 1,16 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: versions
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: take what the registry and the organisation say
+        run: node scripts/catalogue.mjs
+
+      - name: open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- src/data/versions.json src/data/packages.ts; then
+            echo "nothing moved"; exit 0
+          fi
+          # Only those two may change, and the catalogue only by growing: the
+          # script appends a new entry and never edits one.
+          if [ -n "$(git diff --name-only -- . ':!src/data/versions.json' ':!src/data/packages.ts')" ]; then
+            echo "::error::something outside the catalogue changed"; git diff --stat; exit 1
+          fi
+          if [ -n "$(git diff -U0 -- src/data/packages.ts | grep -E '^-[^-]')" ]; then
+            echo "::error::the catalogue lost a line"; git diff -- src/data/packages.ts; exit 1
+          fi
+          git config user.name "moonbitstack-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git checkout -B bot/versions
+          git commit -sm "chore(site): follow the registry and the organisation." -- src/data/versions.json src/data/packages.ts
+          git push --force origin bot/versions
+          if [ -z "$(gh pr list --head bot/versions --state open --json number --jq '.[].number')" ]; then
+            gh pr create --head bot/versions --base main \
+              --title "chore(site): follow the registry and the organisation." \
+              --body "$(git show --stat --oneline HEAD | tail -n +2)"
+          fi

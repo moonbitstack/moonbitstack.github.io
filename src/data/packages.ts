@@ -359,6 +359,17 @@ export const packages = [
     unpublished: 'an example',
     blurb: 'An end-to-end example running nine of these as one service.',
   },
+  {
+    name: 'moonconf',
+    group: 'base',
+    blurb: 'Configuration from defaults, the environment and files, checked on the way in.',
+  },
+  {
+    name: 'moonvite',
+    group: 'ui',
+    blurb: 'Scaffolding a new interface project, and the dev server it runs under.',
+    after: 'Vite',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name

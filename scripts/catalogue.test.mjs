@@ -1,8 +1,10 @@
-// What `versions.mjs` must do, and what it must not touch.
+// What `catalogue.mjs` must do, and what it must not touch.
 //
 //   node --test scripts/versions.test.mjs
 //
-// The registry is real here on purpose — a fake one would only prove the fake.
+// The registry and GitHub are real here on purpose — a fake one would only
+// prove the fake. They are also why this is not in the pages pipeline: a
+// service having a bad minute should not redden a deploy. Run it by hand.
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
@@ -12,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
 const run = promisify(execFile)
-const SCRIPT = fileURLToPath(new URL('./versions.mjs', import.meta.url))
+const SCRIPT = fileURLToPath(new URL('./catalogue.mjs', import.meta.url))
 const CATALOGUE = new URL('../src/data/packages.ts', import.meta.url)
 const VERSIONS = new URL('../src/data/versions.json', import.meta.url)
 
@@ -45,10 +47,27 @@ const withRaft = value => {
   return JSON.stringify(out, null, 2) + '\n'
 }
 
-test('the catalogue is never written to', async () => {
+test('an entry already written is never edited', async () => {
   const { code, list } = await against({ known: withRaft('0.0.1') })
   assert.equal(code, 0)
   assert.deepEqual(list, catalogue)
+})
+
+test('a repository no entry names is appended, with its group from its topic', async () => {
+  const gone = catalogue
+    .toString()
+    .replace(/ {2}\{\n {4}name: 'moonvite',\n(?:[^{}]*\n)*? {2}\},\n/, '')
+  assert.notEqual(gone, catalogue.toString())
+  const { code, out, list } = await against({ list: gone })
+  assert.equal(code, 0)
+  assert.match(out, /moonvite is in the organisation/)
+  const back = list.toString()
+  // it came back, in the group its topic names
+  assert.match(back, /name: 'moonvite',\n\s*group: 'ui',/)
+  // and nothing that was there went missing
+  for (const line of gone.split('\n')) {
+    if (line.trim()) assert.ok(back.includes(line), `lost: ${line}`)
+  }
 })
 
 test('a version that moved on is taken up', async () => {

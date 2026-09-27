@@ -30,10 +30,10 @@ jobs:
         with:
           node-version: 24
       - run: npm install --no-audit --no-fund
-      # Nothing is committed back: the file holds the last version written down
-      # and this replaces it for the build, so a registry that is down costs
-      # freshness and not a red pipeline.
-      - run: node scripts/versions.mjs
+      # Nothing is committed back here: the page is built from what the
+      # registry says right now, and a registry that is down costs freshness
+      # and not a red pipeline. `versions.yml` is what makes the files catch up.
+      - run: node scripts/catalogue.mjs
       - run: npx astro check
       - run: npx astro build
       - uses: actions/upload-pages-artifact@v4
