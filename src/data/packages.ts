@@ -30,8 +30,8 @@ export interface Pkg {
   readonly repo?: string
   /** The path under this domain that serves its documentation, when one is live. */
   readonly docs?: string
-  /** Absent for the two that are meant to be copied rather than added. */
-  readonly unpublished?: true
+  /** What to call the two that are not published — they are not the same thing. */
+  readonly unpublished?: 'a template' | 'an example'
 }
 
 // Ordered the way the stack stands: what answers a request at the top, what it
@@ -45,7 +45,7 @@ export const groups = [
   { id: 'infer', title: 'Inference', note: 'Running a model, and the four libraries underneath it.' },
   { id: 'format', title: 'Formats', note: 'Text and binary formats, read and written back.' },
   { id: 'base', title: 'Foundations', note: 'What everything above is allowed to depend on.' },
-  { id: 'start', title: 'Beginning', note: 'Copied rather than added.' },
+  { id: 'start', title: 'Beginning', note: 'Not published: one to copy from, one to read.' },
 ] as const satisfies readonly Group[]
 
 export const packages = [
@@ -380,13 +380,13 @@ export const packages = [
   {
     name: 'moonkit',
     group: 'start',
-    unpublished: true,
+    unpublished: 'a template',
     blurb: 'The template every repository here starts from: workflows, skeleton, licence.',
   },
   {
     name: 'moonhelo',
     group: 'start',
-    unpublished: true,
+    unpublished: 'an example',
     blurb: 'An end-to-end example running nine of these as one service.',
   },
 ] as const satisfies readonly Pkg[]
