@@ -1,6 +1,8 @@
 // The one place the index is written down. Every page, island and link on this
 // site reads from here, so a new repository is a row rather than an edit.
 
+import versions from './versions.json'
+
 export type GroupId =
   | 'web'
   | 'net'
@@ -24,8 +26,6 @@ export interface Pkg {
   readonly blurb: string
   /** What it is modeled on, when it follows something. */
   readonly after?: string
-  /** The published version. Absent means the repository exists and the work has not started. */
-  readonly version?: string
   /** The repository, when it is not one of its own. */
   readonly repo?: string
   /** The path under this domain that serves its documentation, when one is live. */
@@ -52,7 +52,6 @@ export const packages = [
   {
     name: 'moonasgi',
     group: 'web',
-    version: '0.10.0',
     docs: 'moonasgi',
     blurb: 'ASGI 3.0: the interface between servers and frameworks.',
     after: 'the ASGI specification',
@@ -60,7 +59,6 @@ export const packages = [
   {
     name: 'mooncat',
     group: 'web',
-    version: '0.14.6',
     docs: 'mooncat',
     blurb: 'Native ASGI server speaking HTTP/1.1, HTTP/2, HTTP/3 and WebSocket.',
     after: 'uvicorn',
@@ -68,7 +66,6 @@ export const packages = [
   {
     name: 'moonapi',
     group: 'web',
-    version: '0.13.1',
     docs: 'moonapi',
     blurb: 'Typed web framework with validation, dependency injection and OpenAPI 2.0, 3.0 and 3.1.',
     after: 'FastAPI',
@@ -76,7 +73,6 @@ export const packages = [
   {
     name: 'moongql',
     group: 'web',
-    version: '0.9.0',
     docs: 'moongql',
     blurb: 'Code-first GraphQL with subscriptions and Apollo Federation.',
     after: 'strawberry, and the GraphQL specification',
@@ -97,7 +93,6 @@ export const packages = [
   {
     name: 'moonhttp',
     group: 'net',
-    version: '0.12.1',
     docs: 'moonhttp',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
     after: 'the HTTP family of RFCs, and ylong_http',
@@ -105,14 +100,12 @@ export const packages = [
   {
     name: 'moontls',
     group: 'net',
-    version: '0.9.0',
     blurb: 'TLS 1.3 and DTLS 1.3, as state machines. No sockets, and not one line of cryptography of their own.',
     after: 'RFC 8446 and RFC 9147',
   },
   {
     name: 'moonquic',
     group: 'net',
-    version: '0.3.3',
     blurb: 'QUIC transport: packets, streams, loss recovery and congestion control.',
     after: 'RFC 9000 to 9002',
   },
@@ -130,7 +123,6 @@ export const packages = [
   {
     name: 'moonrpc',
     group: 'net',
-    version: '0.19.3',
     docs: 'moonrpc',
     blurb: 'gRPC with server reflection, over moonhttp’s HTTP/2.',
     after: 'grpc-go',
@@ -138,7 +130,6 @@ export const packages = [
   {
     name: 'moonzero',
     group: 'net',
-    version: '0.11.2',
     docs: 'moonzero',
     blurb: 'Microservice framework: config-driven assembly, resilience and service discovery.',
     after: 'go-zero',
@@ -146,7 +137,6 @@ export const packages = [
   {
     name: 'moonctl',
     group: 'net',
-    version: '0.10.0',
     docs: 'moonctl',
     blurb: 'Spec-driven code generator for the whole stack, as the mctl command.',
     after: 'goctl',
@@ -155,7 +145,6 @@ export const packages = [
   {
     name: 'moonorm',
     group: 'data',
-    version: '0.10.0',
     docs: 'moonorm',
     blurb: 'ORM and SQL toolkit: query builder, sessions, relationships and migrations.',
     after: 'SQLAlchemy 2.x',
@@ -163,7 +152,6 @@ export const packages = [
   {
     name: 'moondb',
     group: 'data',
-    version: '0.2.0',
     repo: 'moonorm',
     docs: 'moonorm/db',
     blurb: 'The database-access interface drivers implement, pooling included.',
@@ -172,7 +160,6 @@ export const packages = [
   {
     name: 'moonsqlite',
     group: 'data',
-    version: '0.3.1',
     repo: 'moonorm',
     docs: 'moonorm/sqlite',
     blurb: 'SQLite driver for moondb.',
@@ -181,7 +168,6 @@ export const packages = [
   {
     name: 'moonpostgres',
     group: 'data',
-    version: '0.6.2',
     repo: 'moonorm',
     docs: 'moonorm/postgres',
     blurb: 'PostgreSQL driver speaking the wire protocol itself.',
@@ -190,7 +176,6 @@ export const packages = [
   {
     name: 'moonmysql',
     group: 'data',
-    version: '0.7.2',
     repo: 'moonorm',
     docs: 'moonorm/mysql',
     blurb: 'MySQL and MariaDB driver speaking the wire protocol itself.',
@@ -206,28 +191,24 @@ export const packages = [
   {
     name: 'moonjson',
     group: 'format',
-    version: '0.4.0',
     blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
     after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
     group: 'format',
-    version: '0.1.1',
     blurb: 'YAML 1.2.2, read into the same tree every other reader here produces.',
     after: 'the YAML 1.2.2 specification',
   },
   {
     name: 'moontoml',
     group: 'format',
-    version: '0.1.0',
     blurb: 'TOML 1.0.0 — the format MoonBit’s own moon.mod is written in.',
     after: 'the TOML 1.0.0 specification',
   },
   {
     name: 'moonschema',
     group: 'format',
-    version: '0.2.0',
     blurb: 'JSON Schema validation across all five drafts. It validates; it does not parse.',
     after: 'the JSON Schema specification',
   },
@@ -258,14 +239,12 @@ export const packages = [
   {
     name: 'moonzip',
     group: 'format',
-    version: '0.3.0',
     blurb: 'DEFLATE, the zlib and gzip containers built on it, and the ZIP archive.',
     after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
   {
     name: 'moonbase',
     group: 'format',
-    version: '0.4.0',
     docs: 'moonbase',
     blurb: 'base16, base32, base36, base58, base62 and base64, then bech32, base58check and multibase.',
     after: 'RFC 4648, and the alphabets that grew up outside it',
@@ -273,7 +252,6 @@ export const packages = [
   {
     name: 'moonvar',
     group: 'format',
-    version: '0.2.0',
     blurb: 'How a number becomes bytes and back, fixed width and variable length alike.',
     after: 'the four protocol families that each define it differently',
   },
@@ -281,7 +259,6 @@ export const packages = [
   {
     name: 'mooncrypt',
     group: 'base',
-    version: '0.3.1',
     blurb: 'Hashes, MACs, ciphers, AEAD, key agreement and signatures — one algorithm to a package.',
     after: 'hashlib, hmac and the RustCrypto crates',
   },
@@ -294,34 +271,29 @@ export const packages = [
   {
     name: 'mooncred',
     group: 'base',
-    version: '0.6.1',
     blurb: 'Credential formats: JSON Web Tokens, the keys they are verified with, ASN.1 and X.509.',
     after: 'the JOSE, ASN.1 and PKIX specifications',
   },
   {
     name: 'moondate',
     group: 'base',
-    version: '0.1.0',
     blurb: 'Dates, times, instants, durations and cron expressions.',
     after: 'Python’s datetime',
   },
   {
     name: 'moonlog',
     group: 'base',
-    version: '0.1.0',
     blurb: 'A level, a message, fields carried as values, and a seam to write through.',
   },
   {
     name: 'moonpool',
     group: 'base',
-    version: '0.2.0',
     blurb: 'Resource pools, backoff and flow control — the bookkeeping every client rewrites.',
   },
 
   {
     name: 'moonraft',
     group: 'systems',
-    version: '0.7.0',
     docs: 'moonraft',
     blurb: 'A function-by-function port of etcd-io/raft, fully covered by tests.',
     after: 'etcd-io/raft',
@@ -329,7 +301,6 @@ export const packages = [
   {
     name: 'moonkoog',
     group: 'systems',
-    version: '0.6.1',
     docs: 'moonkoog',
     blurb: 'Agent orchestration: strategy graphs, tools, structured output, retrieval and MCP.',
     after: 'JetBrains Koog',
@@ -338,14 +309,12 @@ export const packages = [
   {
     name: 'moonetui',
     group: 'ui',
-    version: '0.1.1',
     blurb: 'Terminal user interfaces: cell buffers, diffed output, layout, widgets and drivers.',
     after: 'Textual',
   },
   {
     name: 'moonegui',
     group: 'ui',
-    version: '0.2.0',
     blurb: 'Immediate-mode graphical interfaces: one frame, one pass over the state.',
     after: 'egui',
   },
@@ -396,6 +365,8 @@ export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
 
 /** Everything a card needs, worked out once. */
 export interface Entry extends Pkg {
+  /** What mooncakes reports, or absent when nothing is published under the name. */
+  readonly version?: string
   readonly repoUrl: string
   readonly docsUrl?: string
   readonly modUrl?: string
@@ -403,16 +374,21 @@ export interface Entry extends Pkg {
   readonly haystack: string
 }
 
-// `as const` above keeps every literal, so the map is given the wider type:
-// the union of literals has no `version` on the members that lack one.
-export const entries: readonly Entry[] = packages.map((pkg: Pkg): Entry => ({
-  ...pkg,
-  repoUrl: `https://github.com/moonbitstack/${repoOf(pkg)}`,
-  docsUrl: pkg.docs && `https://moonbitstack.github.io/${pkg.docs}/`,
-  modUrl: pkg.version && `https://mooncakes.io/docs/moonbitstack/${pkg.name}`,
-  planned: !pkg.version && !pkg.unpublished,
-  haystack: `${pkg.name} ${pkg.blurb} ${pkg.after ?? ''}`.toLowerCase(),
-}))
+// The version is not written down here: `versions.json` holds what mooncakes
+// reports, refreshed by `scripts/versions.mjs`, so a release elsewhere never
+// needs an edit to this file.
+export const entries: readonly Entry[] = packages.map((pkg: Pkg): Entry => {
+  const version = (versions as Record<string, string>)[pkg.name]
+  return {
+    ...pkg,
+    version,
+    repoUrl: `https://github.com/moonbitstack/${repoOf(pkg)}`,
+    docsUrl: pkg.docs && `https://moonbitstack.github.io/${pkg.docs}/`,
+    modUrl: version && `https://mooncakes.io/docs/moonbitstack/${pkg.name}`,
+    planned: !version && !pkg.unpublished,
+    haystack: `${pkg.name} ${pkg.blurb} ${pkg.after ?? ''}`.toLowerCase(),
+  }
+})
 
 export const byGroup = Object.groupBy(entries, entry => entry.group)
 
