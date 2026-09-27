@@ -321,7 +321,7 @@ export const packages = [
   {
     name: 'moonraft',
     group: 'systems',
-    version: '0.6.0',
+    version: '0.7.0',
     docs: 'moonraft',
     blurb: 'A function-by-function port of etcd-io/raft, fully covered by tests.',
     after: 'etcd-io/raft',
