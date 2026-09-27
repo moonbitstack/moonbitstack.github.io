@@ -60,7 +60,7 @@ export const packages = [
   {
     name: 'mooncat',
     group: 'web',
-    version: '0.14.4',
+    version: '0.14.5',
     docs: 'mooncat',
     blurb: 'Native ASGI server speaking HTTP/1.1, HTTP/2, HTTP/3 and WebSocket.',
     after: 'uvicorn',
@@ -68,7 +68,7 @@ export const packages = [
   {
     name: 'moonapi',
     group: 'web',
-    version: '0.13.0',
+    version: '0.13.1',
     docs: 'moonapi',
     blurb: 'Typed web framework with validation, dependency injection and OpenAPI 2.0, 3.0 and 3.1.',
     after: 'FastAPI',
@@ -97,7 +97,8 @@ export const packages = [
   {
     name: 'moonhttp',
     group: 'net',
-    version: '0.11.0',
+    version: '0.12.1',
+    docs: 'moonhttp',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
     after: 'the HTTP family of RFCs, and ylong_http',
   },
@@ -129,7 +130,7 @@ export const packages = [
   {
     name: 'moonrpc',
     group: 'net',
-    version: '0.19.2',
+    version: '0.19.3',
     docs: 'moonrpc',
     blurb: 'gRPC with server reflection, over moonhttp’s HTTP/2.',
     after: 'grpc-go',
