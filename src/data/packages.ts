@@ -60,7 +60,7 @@ export const packages = [
   {
     name: 'mooncat',
     group: 'web',
-    version: '0.14.5',
+    version: '0.14.6',
     docs: 'mooncat',
     blurb: 'Native ASGI server speaking HTTP/1.1, HTTP/2, HTTP/3 and WebSocket.',
     after: 'uvicorn',
@@ -112,7 +112,7 @@ export const packages = [
   {
     name: 'moonquic',
     group: 'net',
-    version: '0.3.2',
+    version: '0.3.3',
     blurb: 'QUIC transport: packets, streams, loss recovery and congestion control.',
     after: 'RFC 9000 to 9002',
   },
