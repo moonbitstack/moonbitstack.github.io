@@ -1,0 +1,54 @@
+name: versions
+
+# The page already takes its versions from mooncakes at build time, so it is
+# never stale. This is what stops the file behind it from drifting: it opens one
+# pull request and keeps reusing it, so a month of releases is one review.
+on:
+  repository_dispatch:
+    types: [released]
+  schedule:
+    - cron: "10 4 1,16 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: versions
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: take the versions mooncakes reports
+        run: node scripts/versions.mjs
+
+      - name: open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- src/data/packages.ts; then
+            echo "nothing moved"; exit 0
+          fi
+          # Only the catalogue may change. Anything else means the script did
+          # something it was not asked to, and a pull request would carry it.
+          if [ -n "$(git diff --name-only -- . ':!src/data/packages.ts')" ]; then
+            echo "::error::something outside the catalogue changed"; git diff --stat; exit 1
+          fi
+          git config user.name "moonbitstack-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git checkout -B bot/versions
+          git commit -sm "chore(site): follow the versions mooncakes reports." -- src/data/packages.ts
+          git push --force origin bot/versions
+          if [ -z "$(gh pr list --head bot/versions --state open --json number --jq '.[].number')" ]; then
+            gh pr create --head bot/versions --base main \
+              --title "chore(site): follow the versions mooncakes reports." \
+              --body "$(git show --stat --oneline HEAD | tail -n +2)"
+          fi
