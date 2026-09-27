@@ -14,7 +14,7 @@ function Item(props: { readonly entry: Entry }) {
     <article class={entry.planned ? 'item unwritten' : 'item'}>
       <h3>
         <a href={entry.repoUrl}>{entry.name}</a>
-        <span class="state">{entry.version ?? (entry.planned ? 'in design' : 'a template')}</span>
+        <span class="state">{entry.version ?? (entry.planned ? 'in design' : entry.unpublished)}</span>
       </h3>
       <p>{entry.blurb}</p>
       <Show when={entry.after}>{after => <p class="after">after {after()}</p>}</Show>
