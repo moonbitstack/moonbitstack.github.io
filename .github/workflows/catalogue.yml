@@ -56,3 +56,40 @@ jobs:
               --title "chore(site): follow the registry and the organisation." \
               --body "$(git show --stat --oneline HEAD | tail -n +2)"
           fi
+
+      # Merged without a person only when it is provably this workflow's own:
+      # opened by the Actions bot from a branch of this repository (never a
+      # fork), every commit by the bot account above, nothing touched but the
+      # two catalogue files, and the catalogue only growing. Anything else
+      # stays open for review.
+      - name: merge it when it is ours
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pr=$(gh pr list --head bot/versions --state open --json number --jq '.[0].number')
+          [ -n "$pr" ] || { echo "no open pull request"; exit 0; }
+          view=$(gh pr view "$pr" --json author,headRepository,headRepositoryOwner,files,commits)
+          author=$(echo "$view" | jq -r '.author.login')
+          owner=$(echo "$view" | jq -r '.headRepositoryOwner.login')
+          repo=$(echo "$view" | jq -r '.headRepository.name')
+          if [ "$author" != "app/github-actions" ] && [ "$author" != "github-actions" ]; then
+            echo "opened by $author, left for review"; exit 0
+          fi
+          if [ "$owner/$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "head is $owner/$repo, not this repository; left for review"; exit 0
+          fi
+          others=$(echo "$view" | jq -r '.files[].path' | grep -vxE 'src/data/versions\.json|src/data/packages\.ts' || true)
+          if [ -n "$others" ]; then
+            echo "touches $others; left for review"; exit 0
+          fi
+          strangers=$(echo "$view" | jq -r '.commits[].authors[].email' | grep -vx 'bot@users.noreply.github.com' || true)
+          if [ -n "$strangers" ]; then
+            echo "commits by $strangers; left for review"; exit 0
+          fi
+          if gh pr diff "$pr" | awk '/^diff --git/ { on = ($0 ~ /src\/data\/packages\.ts/) } on' | grep -qE '^-[^-]'; then
+            echo "the catalogue lost a line; left for review"; exit 0
+          fi
+          gh pr merge "$pr" --squash --delete-branch
+          # A merge made with this token fires no push event, so start the
+          # deploy explicitly.
+          gh workflow run pages.yml --ref main
