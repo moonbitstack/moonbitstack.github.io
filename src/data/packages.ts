@@ -370,6 +370,12 @@ export const packages = [
     blurb: 'Scaffolding a new interface project, and the dev server it runs under.',
     after: 'Vite',
   },
+  // Added from the organisation.
+  {
+    name: 'moonast',
+    group: 'base',
+    blurb: 'Generate MoonBit code from annotated declarations: templates over the official syntax tree, typed attribute arguments, and the generator scaffolding behind dev_build.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
