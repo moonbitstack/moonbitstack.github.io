@@ -70,6 +70,19 @@ test('a repository no entry names is appended, with its group from its topic', a
   }
 })
 
+test('a module with no repository of its own is found through the registry', async () => {
+  // moonmysql lives inside the moonorm repository, so GitHub never lists it.
+  // Only mooncakes knows it is published. This is the case that went unseen.
+  const gone = catalogue
+    .toString()
+    .replace(/ {2}\{\n {4}name: 'moonmysql',\n(?:[^{}]*\n)*? {2}\},\n/, '')
+  assert.notEqual(gone, catalogue.toString())
+  const { code, out, list } = await against({ list: gone })
+  assert.equal(code, 0)
+  assert.match(out, /moonmysql is in the organisation/)
+  assert.match(list.toString(), /name: 'moonmysql',/)
+})
+
 test('a version that moved on is taken up', async () => {
   const { code, out, known } = await against({ known: withRaft('0.0.1') })
   assert.equal(code, 0)

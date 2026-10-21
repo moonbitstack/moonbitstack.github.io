@@ -53,6 +53,25 @@ async function all(names) {
   return out
 }
 
+/**
+ * Every module published under the organisation, or null when mooncakes will
+ * not say.
+ *
+ * Asking GitHub for repositories is not enough: a repository may hold several
+ * modules, and those extra ones are published and have versions but have no
+ * repository of their own to be found by. moonorm holds four — moondb and the
+ * three drivers — and they were missing from the catalogue until this looked
+ * for modules as well as for repositories.
+ */
+async function modules() {
+  const body = await json(`https://mooncakes.io/api/v0/user/${ORG}`)
+  if (body === null || !Array.isArray(body.modules)) return null
+  return body.modules
+    .filter(one => !one.yanked)
+    .map(one => one.name.slice(ORG.length + 1))
+    .filter(name => /^moon[a-z0-9]+$/.test(name))
+}
+
 /** Every module repository the organisation has, or null when GitHub will not say. */
 async function repositories() {
   const headers = { accept: 'application/vnd.github+json' }
@@ -116,6 +135,7 @@ for (const name of Object.keys(known)) {
 const groups = /export type GroupId =\n((?:\s*\|\s*'[a-z]+'\n)+)/.exec(catalogue)
 const ids = new Set([...(groups?.[1] ?? '').matchAll(/'([a-z]+)'/g)].map(m => m[1]))
 const repos = await repositories()
+const extra = await modules()
 const fresh = []
 
 if (repos === null) {
@@ -131,6 +151,26 @@ if (repos === null) {
       group: group ?? 'base',
       blurb: repo.description || 'Newly created; nothing written down about it yet.',
       guessed: group === undefined,
+    })
+  }
+}
+
+// A module with no repository of its own has no topic and no description to
+// read, so it lands in `base` wearing the same note a repository without a
+// topic gets. The two sets are unioned, not chosen between: a module may have
+// a repository, or share one, or — until it is published — have only a
+// repository.
+if (extra === null) {
+  console.log('mooncakes would not list the organisation — a module without its own repository cannot be seen')
+} else {
+  const seen = new Set(fresh.map(one => one.name))
+  for (const name of extra.sort()) {
+    if (listed.has(name) || seen.has(name)) continue
+    fresh.push({
+      name,
+      group: 'base',
+      blurb: 'Published under the organisation; nothing written down about it yet.',
+      guessed: true,
     })
   }
 }
