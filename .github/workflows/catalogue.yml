@@ -32,6 +32,7 @@ jobs:
         run: node scripts/catalogue.mjs
 
       - name: open or update the pull request
+        id: pr
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -51,6 +52,7 @@ jobs:
           git checkout -B bot/versions
           git commit -sm "chore(site): follow the registry and the organisation." -- src/data/versions.json src/data/packages.ts
           git push --force origin bot/versions
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
           if [ -z "$(gh pr list --head bot/versions --state open --json number --jq '.[].number')" ]; then
             gh pr create --head bot/versions --base main \
               --title "chore(site): follow the registry and the organisation." \
@@ -63,6 +65,9 @@ jobs:
       # two catalogue files, and the catalogue only growing. Anything else
       # stays open for review.
       - name: merge it when it is ours
+        # Only right after this run pushed: an older pull request still open
+        # would carry older versions, and merging it would roll the catalogue back.
+        if: steps.pr.outputs.pushed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
