@@ -388,6 +388,18 @@ export const packages = [
     group: 'format',
     blurb: 'Semantic Versioning 2.0.0: parsing, printing, precedence, bumping and version ranges, with the range grammar of npm, Cargo, Ruby or the strict spec as a parameter.',
   },
+  // Added from the organisation.
+  {
+    name: 'moonurl',
+    group: 'format',
+    blurb: 'URI references as RFC 3986 defines them: parsing, recomposing, resolving and percent coding by component, and data URLs.',
+  },
+  // Added from the organisation.
+  {
+    name: 'moonward',
+    group: 'base',
+    blurb: 'Resilience without I/O: circuit breaking, adaptive load shedding, rate limits, backoff and deadlines, with the clock and the randomness passed in.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
