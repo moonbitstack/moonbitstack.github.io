@@ -376,6 +376,18 @@ export const packages = [
     group: 'base',
     blurb: 'Generate MoonBit code from annotated declarations: templates over the official syntax tree, typed attribute arguments, and the generator scaffolding behind dev_build.',
   },
+  // Added from the organisation.
+  {
+    name: 'moonmime',
+    group: 'format',
+    blurb: 'moonmime — the MIME family for MoonBit: media types and their parameters, the extension-to-type registry, Content-Disposition, multipart bodies and multipart/form-data, each read and written from bytes. No sockets, no files.',
+  },
+  // Added from the organisation.
+  {
+    name: 'moonsver',
+    group: 'format',
+    blurb: 'Semantic Versioning 2.0.0: parsing, printing, precedence, bumping and version ranges, with the range grammar of npm, Cargo, Ruby or the strict spec as a parameter.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
