@@ -1,6 +1,7 @@
 {
   "moonapi": "0.15.0",
   "moonasgi": "0.10.0",
+  "moonast": "0.1.1",
   "moonbase": "0.4.0",
   "mooncat": "0.17.0",
   "mooncred": "0.6.1",
