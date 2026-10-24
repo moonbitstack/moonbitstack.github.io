@@ -407,6 +407,13 @@ export const packages = [
     blurb: 'Model Context Protocol servers and clients: the wire model, tools, resources and prompts.',
     after: 'FastMCP and the MCP specification',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonucd',
+    group: 'base',
+    blurb: 'Unicode character database for MoonBit: categories, properties, case mapping and folding, generated from the UCD.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
