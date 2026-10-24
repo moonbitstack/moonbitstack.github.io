@@ -400,6 +400,13 @@ export const packages = [
     group: 'base',
     blurb: 'Resilience without I/O: circuit breaking, adaptive load shedding, rate limits, backoff and deadlines, with the clock and the randomness passed in.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonmcp',
+    group: 'base',
+    blurb: 'Model Context Protocol servers and clients for MoonBit, after FastMCP.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
