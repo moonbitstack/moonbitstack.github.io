@@ -80,8 +80,8 @@ export const packages = [
   {
     name: 'moonfetch',
     group: 'web',
-    blurb: 'HTTP client: the blocking call and the awaited one are spelled the same.',
-    after: 'requests and aiohttp',
+    blurb: 'HTTP client: a Client that keeps its connections, HTTP/1.1 and HTTP/2 by ALPN, redirects, timeouts and compression.',
+    after: 'httpx and reqwest',
   },
   {
     name: 'moonpug',
@@ -112,7 +112,8 @@ export const packages = [
   {
     name: 'moonnet',
     group: 'net',
-    blurb: 'The shared contract over HTTP, TLS and QUIC, and the wiring that puts them on a socket.',
+    blurb: 'Connections that read and write the same in the clear and under TLS, the listener and the dialler.',
+    after: 'Go net and hyper',
   },
   {
     name: 'moonrtc',
@@ -400,12 +401,11 @@ export const packages = [
     group: 'base',
     blurb: 'Resilience without I/O: circuit breaking, adaptive load shedding, rate limits, backoff and deadlines, with the clock and the randomness passed in.',
   },
-  // Added from the organisation. Its group is a guess — a repository
-  // topic naming one would have said where it belongs.
   {
     name: 'moonmcp',
-    group: 'base',
-    blurb: 'Model Context Protocol servers and clients for MoonBit, after FastMCP.',
+    group: 'web',
+    blurb: 'Model Context Protocol servers and clients: the wire model, tools, resources and prompts.',
+    after: 'FastMCP and the MCP specification',
   },
 ] as const satisfies readonly Pkg[]
 
