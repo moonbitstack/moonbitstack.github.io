@@ -421,6 +421,13 @@ export const packages = [
     group: 'base',
     blurb: 'UUIDs for MoonBit: parse every spelling, make versions 1 to 8, generate over your own clock and randomness.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonnum',
+    group: 'base',
+    blurb: 'moonnum — Python\'s numbers for MoonBit: arbitrary-precision integers, floats, complex numbers and fractions, read, written and formatted the way Python reads, writes and formats them.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
