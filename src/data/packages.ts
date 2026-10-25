@@ -414,6 +414,13 @@ export const packages = [
     group: 'base',
     blurb: 'Unicode character database for MoonBit: categories, properties, case mapping and folding, generated from the UCD.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonuuid',
+    group: 'base',
+    blurb: 'UUIDs for MoonBit: parse every spelling, make versions 1 to 8, generate over your own clock and randomness.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
