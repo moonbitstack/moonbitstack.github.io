@@ -428,6 +428,27 @@ export const packages = [
     group: 'base',
     blurb: 'moonnum — Python\'s numbers for MoonBit: arbitrary-precision integers, floats, complex numbers and fractions, read, written and formatted the way Python reads, writes and formats them.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonimage',
+    group: 'base',
+    blurb: 'Image codecs for MoonBit: PNG, QOI, BMP, TGA, JPEG, GIF and WebP, and the pixel arithmetic between them.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonmath',
+    group: 'base',
+    blurb: 'Vectors, matrices, quaternions and geometry for MoonBit, laid out for WGSL.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonrgba',
+    group: 'base',
+    blurb: 'CSS colour syntax, colour spaces, gamut mapping, terminal colours and colour arithmetic for MoonBit.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
