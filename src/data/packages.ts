@@ -449,6 +449,12 @@ export const packages = [
     group: 'base',
     blurb: 'CSS colour syntax, colour spaces, gamut mapping, terminal colours and colour arithmetic for MoonBit.',
   },
+  // Added from the organisation.
+  {
+    name: 'moonrand',
+    group: 'base',
+    blurb: 'Secure random bytes and unbiased sampling for MoonBit.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
