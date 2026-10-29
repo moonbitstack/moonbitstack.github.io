@@ -455,6 +455,12 @@ export const packages = [
     group: 'base',
     blurb: 'Secure random bytes and unbiased sampling for MoonBit.',
   },
+  // Added from the organisation.
+  {
+    name: 'moonmail',
+    group: 'net',
+    blurb: 'Email for MoonBit: messages, SMTP, IMAP and POP3.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
