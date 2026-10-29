@@ -32,6 +32,7 @@
   "moonrand": "0.1.0",
   "moonrpc": "0.21.1",
   "moonschema": "0.2.0",
+  "moonseal": "0.1.0",
   "moonsqlite": "0.3.1",
   "moonsver": "0.1.0",
   "moontls": "0.9.3",
