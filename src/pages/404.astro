@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro'
+---
+
+<Base title="Not here · moonbitstack" description="No page at this address.">
+  <main class="lost">
+    <h1>Not here.</h1>
+    <p>No page at this address. <a href="/">The index</a> lists every library.</p>
+  </main>
+</Base>
+
+<script is:inline>
+  // A short address names a library without its prefix: /rgba/guide.html is
+  // /moonrgba/guide.html. Pages serves this page for any path no repository
+  // owns, so the long form is tried once before the page stays a 404.
+  ;(() => {
+    const [first, ...rest] = location.pathname.split('/').filter(Boolean)
+    if (!first || first.startsWith('moon')) return
+    const target = `/moon${first}/${rest.join('/')}${location.search}${location.hash}`
+    fetch(target, { method: 'HEAD' })
+      .then((r) => r.ok && location.replace(target))
+      .catch(() => {})
+  })()
+</script>
+
+<style>
+  .lost {
+    max-width: 36rem;
+    margin: 18vh auto;
+    padding: 0 16px;
+  }
+  .lost h1 {
+    margin: 0 0 0.6rem;
+  }
+</style>
