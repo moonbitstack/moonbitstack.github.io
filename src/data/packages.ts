@@ -86,6 +86,7 @@ export const packages = [
   {
     name: 'moonpug',
     group: 'web',
+    docs: 'moonpug',
     blurb: 'Every feature of four template languages, spelled the way Jinja2 spells it.',
     after: 'Jinja2, Django templates, Pug and Slim',
   },
@@ -154,7 +155,7 @@ export const packages = [
     name: 'moondb',
     group: 'data',
     repo: 'moonorm',
-    docs: 'moonorm/db',
+    docs: 'moonorm/moondb',
     blurb: 'The database-access interface drivers implement, pooling included.',
     after: 'database/sql and DB-API 2.0',
   },
@@ -162,7 +163,7 @@ export const packages = [
     name: 'moonsqlite',
     group: 'data',
     repo: 'moonorm',
-    docs: 'moonorm/sqlite',
+    docs: 'moonorm/moondb/sqlite.html',
     blurb: 'SQLite driver for moondb.',
     after: 'the SQLite C API',
   },
@@ -170,7 +171,7 @@ export const packages = [
     name: 'moonpostgres',
     group: 'data',
     repo: 'moonorm',
-    docs: 'moonorm/postgres',
+    docs: 'moonorm/moondb/postgres.html',
     blurb: 'PostgreSQL driver speaking the wire protocol itself.',
     after: 'asyncpg',
   },
@@ -178,7 +179,7 @@ export const packages = [
     name: 'moonmysql',
     group: 'data',
     repo: 'moonorm',
-    docs: 'moonorm/mysql',
+    docs: 'moonorm/moondb/mysql.html',
     blurb: 'MySQL and MariaDB driver speaking the wire protocol itself.',
     after: 'PyMySQL',
   },
@@ -192,54 +193,63 @@ export const packages = [
   {
     name: 'moonjson',
     group: 'format',
+    docs: 'moonjson',
     blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
     after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
     group: 'format',
+    docs: 'moonyaml',
     blurb: 'YAML 1.2.2, read into the same tree every other reader here produces.',
     after: 'the YAML 1.2.2 specification',
   },
   {
     name: 'moontoml',
     group: 'format',
+    docs: 'moontoml',
     blurb: 'TOML 1.0.0 — the format MoonBit’s own moon.mod is written in.',
     after: 'the TOML 1.0.0 specification',
   },
   {
     name: 'moonschema',
     group: 'format',
+    docs: 'moonschema',
     blurb: 'JSON Schema validation across all five drafts. It validates; it does not parse.',
     after: 'the JSON Schema specification',
   },
   {
     name: 'moonxml',
     group: 'format',
+    docs: 'moonxml',
     blurb: 'Tag documents parsed, queried by XPath and CSS, edited, and written back.',
     after: 'lxml and BeautifulSoup',
   },
   {
     name: 'moonmedia',
     group: 'format',
+    docs: 'moonmedia',
     blurb: 'Streaming playlists and containers: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
     after: 'RFC 8216 and ISO/IEC 23009-1',
   },
   {
     name: 'moonregex',
     group: 'format',
+    docs: 'moonregex',
     blurb: 'Python’s re, the regex superset behind it, and the dialect JSON Schema means.',
     after: 'Python’s re, mrab-regex, and ECMA-262 §22.2',
   },
   {
     name: 'moonfory',
     group: 'format',
+    docs: 'moonfory',
     blurb: 'A value written so that Java, Go or Python reads it back as its own.',
     after: 'Apache Fory',
   },
   {
     name: 'moonzip',
     group: 'format',
+    docs: 'moonzip',
     blurb: 'DEFLATE, the zlib and gzip containers built on it, and the ZIP archive.',
     after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
@@ -253,6 +263,7 @@ export const packages = [
   {
     name: 'moonvar',
     group: 'format',
+    docs: 'moonvar',
     blurb: 'How a number becomes bytes and back, fixed width and variable length alike.',
     after: 'the four protocol families that each define it differently',
   },
@@ -266,29 +277,34 @@ export const packages = [
   {
     name: 'moonseal',
     group: 'base',
+    docs: 'moonseal',
     blurb: 'Seal a file for several people at once; any one of them opens it.',
     after: 'age',
   },
   {
     name: 'mooncred',
     group: 'base',
+    docs: 'mooncred',
     blurb: 'Credential formats: JSON Web Tokens, the keys they are verified with, ASN.1 and X.509.',
     after: 'the JOSE, ASN.1 and PKIX specifications',
   },
   {
     name: 'moondate',
     group: 'base',
+    docs: 'moondate',
     blurb: 'Dates, times, instants, durations and cron expressions.',
     after: 'Python’s datetime',
   },
   {
     name: 'moonlog',
     group: 'base',
+    docs: 'moonlog',
     blurb: 'A level, a message, fields carried as values, and a seam to write through.',
   },
   {
     name: 'moonpool',
     group: 'base',
+    docs: 'moonpool',
     blurb: 'Resource pools, backoff and flow control — the bookkeeping every client rewrites.',
   },
 
@@ -310,6 +326,7 @@ export const packages = [
   {
     name: 'moonetui',
     group: 'ui',
+    docs: 'moonetui',
     blurb: 'Terminal user interfaces: cell buffers, diffed output, layout, widgets and drivers.',
     after: 'Textual',
   },
@@ -381,29 +398,34 @@ export const packages = [
   {
     name: 'moonmime',
     group: 'format',
+    docs: 'moonmime',
     blurb: 'moonmime — the MIME family for MoonBit: media types and their parameters, the extension-to-type registry, Content-Disposition, multipart bodies and multipart/form-data, each read and written from bytes. No sockets, no files.',
   },
   // Added from the organisation.
   {
     name: 'moonsver',
     group: 'format',
+    docs: 'moonsver',
     blurb: 'Semantic Versioning 2.0.0: parsing, printing, precedence, bumping and version ranges, with the range grammar of npm, Cargo, Ruby or the strict spec as a parameter.',
   },
   // Added from the organisation.
   {
     name: 'moonurl',
     group: 'format',
+    docs: 'moonurl',
     blurb: 'URI references as RFC 3986 defines them: parsing, recomposing, resolving and percent coding by component, and data URLs.',
   },
   // Added from the organisation.
   {
     name: 'moonward',
     group: 'base',
+    docs: 'moonward',
     blurb: 'Resilience without I/O: circuit breaking, adaptive load shedding, rate limits, backoff and deadlines, with the clock and the randomness passed in.',
   },
   {
     name: 'moonmcp',
     group: 'web',
+    docs: 'moonmcp',
     blurb: 'Model Context Protocol servers and clients: the wire model, tools, resources and prompts.',
     after: 'FastMCP and the MCP specification',
   },
@@ -412,6 +434,7 @@ export const packages = [
   {
     name: 'moonucd',
     group: 'base',
+    docs: 'moonucd',
     blurb: 'Unicode character database for MoonBit: categories, properties, case mapping and folding, generated from the UCD.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -419,6 +442,7 @@ export const packages = [
   {
     name: 'moonuuid',
     group: 'base',
+    docs: 'moonuuid',
     blurb: 'UUIDs for MoonBit: parse every spelling, make versions 1 to 8, generate over your own clock and randomness.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -426,6 +450,7 @@ export const packages = [
   {
     name: 'moonnum',
     group: 'base',
+    docs: 'moonnum',
     blurb: 'moonnum — Python\'s numbers for MoonBit: arbitrary-precision integers, floats, complex numbers and fractions, read, written and formatted the way Python reads, writes and formats them.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -433,6 +458,7 @@ export const packages = [
   {
     name: 'moonimage',
     group: 'base',
+    docs: 'moonimage',
     blurb: 'Image codecs for MoonBit: PNG, QOI, BMP, TGA, JPEG, GIF and WebP, and the pixel arithmetic between them.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -485,7 +511,7 @@ export const entries: readonly Entry[] = packages.map((pkg: Pkg): Entry => {
     ...pkg,
     version,
     repoUrl: `https://github.com/moonbitstack/${repoOf(pkg)}`,
-    docsUrl: pkg.docs && `https://moonbitstack.github.io/${pkg.docs}/`,
+    docsUrl: pkg.docs && `https://moonbitstack.github.io/${pkg.docs}${pkg.docs.endsWith('.html') ? '' : '/'}`,
     modUrl: version && `https://mooncakes.io/docs/moonbitstack/${pkg.name}`,
     planned: !version && !pkg.unpublished,
     haystack: `${pkg.name} ${pkg.blurb} ${pkg.after ?? ''}`.toLowerCase(),
