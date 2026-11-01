@@ -499,6 +499,34 @@ export const packages = [
     group: 'base',
     blurb: 'A cache for MoonBit: bounded by count or weight, with expiry, loaders and eviction listeners.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonconsul',
+    group: 'base',
+    blurb: 'A Consul client for MoonBit: agent, catalog, health, KV and sessions, with blocking queries.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonetcd',
+    group: 'base',
+    blurb: 'An etcd v3 client for MoonBit: KV, watch, lease, transactions, locks and elections over gRPC.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonredis',
+    group: 'base',
+    blurb: 'A Redis client for MoonBit: RESP2 and RESP3, pipelines, transactions, pub/sub, cluster and sentinel.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonsd',
+    group: 'base',
+    blurb: 'Service discovery for MoonBit: the contract backends implement, with one in-memory registry and a conformance suite.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
