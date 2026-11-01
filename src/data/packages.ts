@@ -492,6 +492,13 @@ export const packages = [
     group: 'base',
     blurb: 'Secure random bytes and unbiased sampling for MoonBit.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonkart',
+    group: 'base',
+    blurb: 'A cache for MoonBit: bounded by count or weight, with expiry, loaders and eviction listeners.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
