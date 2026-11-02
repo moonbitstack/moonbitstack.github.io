@@ -5,6 +5,7 @@
   "moonbase": "0.4.2",
   "mooncat": "0.19.1",
   "moonconf": "0.1.1",
+  "moonconsul": "0.1.0",
   "mooncred": "0.6.7",
   "mooncrypt": "0.4.7",
   "moonctl": "0.12.5",
