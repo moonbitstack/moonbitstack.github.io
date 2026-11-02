@@ -528,6 +528,13 @@ export const packages = [
     group: 'base',
     blurb: 'Service discovery for MoonBit: the contract backends implement, with one in-memory registry and a conformance suite.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonproto',
+    group: 'base',
+    blurb: 'Protocol Buffers for MoonBit: runtime, reflection, JSON and text formats, and the protoc plugin.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
