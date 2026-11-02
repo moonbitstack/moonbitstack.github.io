@@ -81,7 +81,7 @@ export const packages = [
     name: 'moonfetch',
     group: 'web',
     blurb: 'HTTP client: a Client that keeps its connections, HTTP/1.1 and HTTP/2 by ALPN, redirects, timeouts and compression.',
-    after: 'httpx and reqwest',
+    after: 'aiohttp, requests, httpx and reqwest',
   },
   {
     name: 'moonpug',
@@ -96,7 +96,7 @@ export const packages = [
     group: 'net',
     docs: 'moonhttp',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
-    after: 'the HTTP family of RFCs, and ylong_http',
+    after: 'the HTTP family of RFCs, and ylong',
   },
   {
     name: 'moontls',
@@ -236,7 +236,7 @@ export const packages = [
     group: 'format',
     docs: 'moonregex',
     blurb: 'Python’s re, the regex superset behind it, and the dialect JSON Schema means.',
-    after: 'Python’s re, mrab-regex, and ECMA-262 §22.2',
+    after: 're, mrab-regex, and ECMA-262 §22.2',
   },
   {
     name: 'moonfory',
@@ -299,6 +299,7 @@ export const packages = [
     group: 'base',
     docs: 'moonlog',
     blurb: 'A level, a message, fields carried as values, and a seam to write through.',
+    after: 'serlog',
   },
   {
     name: 'moonpool',
@@ -478,7 +479,7 @@ export const packages = [
   {
     name: 'moonrand',
     group: 'base',
-    blurb: 'Secure random bytes and unbiased sampling for MoonBit.',
+    blurb: 'Reproducible pseudo-random numbers: a default generator, sixty-three more, and the sampling and distributions Python’s random names.',
   },
   // Added from the organisation.
   {
