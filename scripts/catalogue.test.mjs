@@ -17,15 +17,18 @@ const run = promisify(execFile)
 const SCRIPT = fileURLToPath(new URL('./catalogue.mjs', import.meta.url))
 const CATALOGUE = new URL('../src/data/packages.ts', import.meta.url)
 const VERSIONS = new URL('../src/data/versions.json', import.meta.url)
+const SITES = new URL('../src/data/sites.json', import.meta.url)
 
 const catalogue = readFileSync(CATALOGUE)
 const versions = readFileSync(VERSIONS)
+const sites = readFileSync(SITES)
 const current = JSON.parse(versions.toString())
 
 /** Run the script over files bent into some shape, then put them back. */
-async function against({ list, known } = {}) {
+async function against({ list, known, linked } = {}) {
   if (list !== undefined) writeFileSync(CATALOGUE, list)
   if (known !== undefined) writeFileSync(VERSIONS, known)
+  if (linked !== undefined) writeFileSync(SITES, linked)
   let result
   try {
     const { stdout, stderr } = await run(process.execPath, [SCRIPT])
@@ -35,8 +38,10 @@ async function against({ list, known } = {}) {
   }
   result.list = readFileSync(CATALOGUE)
   result.known = JSON.parse(readFileSync(VERSIONS, 'utf8'))
+  result.linked = JSON.parse(readFileSync(SITES, 'utf8'))
   writeFileSync(CATALOGUE, catalogue)
   writeFileSync(VERSIONS, versions)
+  writeFileSync(SITES, sites)
   return result
 }
 
@@ -81,6 +86,17 @@ test('a module with no repository of its own is found through the registry', asy
   assert.equal(code, 0)
   assert.match(out, /moonmysql is in the organisation/)
   assert.match(list.toString(), /name: 'moonmysql',/)
+})
+
+test('a homepage a repository names becomes its link, and one taken off goes', async () => {
+  const before = JSON.parse(sites.toString())
+  const bent = { ...before, moonvite: 'https://example.invalid/' }
+  delete bent.moonjson
+  const { code, out, linked } = await against({ linked: JSON.stringify(bent, null, 2) + '\n' })
+  assert.equal(code, 0)
+  assert.match(out, /moonjson site \(none\) → https:\/\/moonbitstack\.github\.io\/moonjson\//)
+  assert.match(out, /moonvite site https:\/\/example\.invalid\/ → \(none\)/)
+  assert.deepEqual(linked, before)
 })
 
 test('a version that moved on is taken up', async () => {

@@ -1,10 +1,13 @@
 // Keep the catalogue in step with what is actually out there.
 //
-// Two jobs, both of which used to be an edit by hand after every release:
+// Three jobs, each of which used to be an edit by hand:
 //
 //   versions  `versions.json` takes whatever mooncakes reports. The catalogue
 //             itself is only read, for the names, so a group or a blurb cannot
 //             be disturbed by a machine.
+//   sites     `sites.json` takes the homepage each repository names on GitHub,
+//             so a library whose site goes live is linked once its repository
+//             says where.
 //   discovery a repository in the organisation that no entry names gets one
 //             appended, with the group from its topics and the blurb from its
 //             description. Nothing already written is touched — the new entry
@@ -18,6 +21,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 const CATALOGUE = new URL('../src/data/packages.ts', import.meta.url)
 const VERSIONS = new URL('../src/data/versions.json', import.meta.url)
+const SITES = new URL('../src/data/sites.json', import.meta.url)
 const ORG = 'moonbitstack'
 // One catalogue entry, brace to brace, read only for its name and for whether
 // it is one of the two that are in the catalogue and not in the registry.
@@ -76,18 +80,36 @@ async function modules() {
 async function repositories() {
   const headers = { accept: 'application/vnd.github+json' }
   if (process.env.GITHUB_TOKEN) headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`
-  const body = await json(
-    `https://api.github.com/orgs/${ORG}/repos?per_page=100&type=public`,
-    headers,
-  )
-  if (body === null) return null
+  const out = []
+  for (let page = 1; ; page++) {
+    const body = await json(
+      `https://api.github.com/orgs/${ORG}/repos?per_page=100&type=public&page=${page}`,
+      headers,
+    )
+    if (body === null) return null
+    out.push(...body)
+    if (body.length < 100) break
+  }
   // `.github` and the site itself are not modules; everything else here is.
-  return body.filter(repo => /^moon[a-z0-9]+$/.test(repo.name))
+  return out.filter(repo => /^moon[a-z0-9]+$/.test(repo.name))
 }
+
+/** A file this script owns, or an empty map before its first run. */
+async function owned(url) {
+  try {
+    return JSON.parse(await readFile(url, 'utf8'))
+  } catch {
+    return {}
+  }
+}
+
+/** The same map with its keys in order, the way both JSON files are written. */
+const ordered = map => Object.fromEntries(Object.entries(map).sort(([a], [b]) => a.localeCompare(b)))
 
 const check = process.argv.includes('--check')
 const catalogue = await readFile(CATALOGUE, 'utf8')
 const known = JSON.parse(await readFile(VERSIONS, 'utf8'))
+const linked = await owned(SITES)
 
 const entries = [...catalogue.matchAll(ENTRY)]
 // Every entry must have been read. One that was not is an entry shaped some
@@ -130,11 +152,25 @@ for (const name of Object.keys(known)) {
   if (!(name in next)) moved.push(`${name} ${known[name]} → gone`)
 }
 
+// --------------------------------------------------------------------- sites
+
+const repos = await repositories()
+let sites = linked
+const relinked = []
+
+if (repos !== null) {
+  // GitHub answering is the whole truth here: a homepage taken off a repository
+  // is a link that should go, so the map is rebuilt rather than merged.
+  sites = ordered(Object.fromEntries(repos.filter(repo => repo.homepage).map(repo => [repo.name, repo.homepage])))
+  for (const name of new Set([...Object.keys(linked), ...Object.keys(sites)])) {
+    if (linked[name] !== sites[name]) relinked.push(`${name} site ${linked[name] ?? '(none)'} → ${sites[name] ?? '(none)'}`)
+  }
+}
+
 // ----------------------------------------------------------------- discovery
 
 const groups = /export type GroupId =\n((?:\s*\|\s*'[a-z]+'\n)+)/.exec(catalogue)
 const ids = new Set([...(groups?.[1] ?? '').matchAll(/'([a-z]+)'/g)].map(m => m[1]))
-const repos = await repositories()
 const extra = await modules()
 const fresh = []
 
@@ -183,20 +219,24 @@ for (const one of fresh) {
 }
 if (silent.length > 0) console.log(`no answer for ${silent.join(', ')} — kept as written`)
 for (const line of moved) console.log(line)
+for (const line of relinked) console.log(line)
 for (const line of lines) console.log(line)
 
-if (moved.length === 0 && fresh.length === 0) {
-  console.log(`every version is current (${names.length} modules), and nothing is missing`)
+const stale = moved.length + relinked.length + fresh.length
+if (stale === 0) {
+  console.log(`every version and site is current (${names.length} modules), and nothing is missing`)
   process.exit(0)
 }
 if (check) {
-  console.error(`${moved.length + fresh.length} out of step — run node scripts/catalogue.mjs`)
+  console.error(`${stale} out of step — run node scripts/catalogue.mjs`)
   process.exit(1)
 }
 
 if (moved.length > 0) {
-  const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)))
-  await writeFile(VERSIONS, JSON.stringify(sorted, null, 2) + '\n')
+  await writeFile(VERSIONS, JSON.stringify(ordered(next), null, 2) + '\n')
+}
+if (relinked.length > 0) {
+  await writeFile(SITES, JSON.stringify(sites, null, 2) + '\n')
 }
 
 if (fresh.length > 0) {

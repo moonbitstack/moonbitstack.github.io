@@ -1,6 +1,7 @@
 // The one place the index is written down. Every page, island and link on this
 // site reads from here, so a new repository is a row rather than an edit.
 
+import sites from './sites.json'
 import versions from './versions.json'
 
 export type GroupId =
@@ -28,7 +29,11 @@ export interface Pkg {
   readonly after?: string
   /** The repository, when it is not one of its own. */
   readonly repo?: string
-  /** The path under this domain that serves its documentation, when one is live. */
+  /**
+   * The path under this domain that serves its documentation, for a module that
+   * shares a repository and so cannot name its own page as a homepage. Every
+   * other site comes from the repository's homepage, through `sites.json`.
+   */
   readonly docs?: string
   /** What to call the two that are not published — they are not the same thing. */
   readonly unpublished?: 'a template' | 'an example'
@@ -52,28 +57,24 @@ export const packages = [
   {
     name: 'moonasgi',
     group: 'web',
-    docs: 'moonasgi',
     blurb: 'ASGI 3.0: the interface between servers and frameworks.',
     after: 'the ASGI specification',
   },
   {
     name: 'mooncat',
     group: 'web',
-    docs: 'mooncat',
     blurb: 'Native ASGI server speaking HTTP/1.1, HTTP/2, HTTP/3 and WebSocket.',
     after: 'uvicorn',
   },
   {
     name: 'moonapi',
     group: 'web',
-    docs: 'moonapi',
     blurb: 'Typed web framework with validation, dependency injection and OpenAPI 2.0, 3.0 and 3.1.',
     after: 'FastAPI',
   },
   {
     name: 'moongql',
     group: 'web',
-    docs: 'moongql',
     blurb: 'Code-first GraphQL with subscriptions and Apollo Federation.',
     after: 'strawberry, and the GraphQL specification',
   },
@@ -86,7 +87,6 @@ export const packages = [
   {
     name: 'moonpug',
     group: 'web',
-    docs: 'moonpug',
     blurb: 'Every feature of four template languages, spelled the way Jinja2 spells it.',
     after: 'Jinja2, Django templates, Pug and Slim',
   },
@@ -94,7 +94,6 @@ export const packages = [
   {
     name: 'moonhttp',
     group: 'net',
-    docs: 'moonhttp',
     blurb: 'The formats a request and a response are written in, with nothing about sockets in them.',
     after: 'the HTTP family of RFCs, and ylong',
   },
@@ -125,21 +124,18 @@ export const packages = [
   {
     name: 'moonrpc',
     group: 'net',
-    docs: 'moonrpc',
     blurb: 'gRPC with server reflection, over moonhttp’s HTTP/2.',
     after: 'grpc-go',
   },
   {
     name: 'moonzero',
     group: 'net',
-    docs: 'moonzero',
     blurb: 'Microservice framework: config-driven assembly, resilience and service discovery.',
     after: 'go-zero',
   },
   {
     name: 'moonctl',
     group: 'net',
-    docs: 'moonctl',
     blurb: 'Spec-driven code generator for the whole stack, as the mctl command.',
     after: 'goctl',
   },
@@ -147,14 +143,12 @@ export const packages = [
   {
     name: 'moonorm',
     group: 'data',
-    docs: 'moonorm',
     blurb: 'ORM and SQL toolkit: query builder, sessions, relationships and migrations.',
     after: 'SQLAlchemy 2.x',
   },
   {
     name: 'moondb',
     group: 'data',
-    docs: 'moondb',
     blurb: 'The database-access interface drivers implement, pooling included.',
     after: 'database/sql and DB-API 2.0',
   },
@@ -192,77 +186,66 @@ export const packages = [
   {
     name: 'moonjson',
     group: 'format',
-    docs: 'moonjson',
     blurb: 'One tree, several ways of writing it: JSON, JSONC, JSON5 and JSON Lines.',
     after: 'RFC 8259, and each dialect’s own specification',
   },
   {
     name: 'moonyaml',
     group: 'format',
-    docs: 'moonyaml',
     blurb: 'YAML 1.2.2, read into the same tree every other reader here produces.',
     after: 'the YAML 1.2.2 specification',
   },
   {
     name: 'moontoml',
     group: 'format',
-    docs: 'moontoml',
     blurb: 'TOML 1.0.0 — the format MoonBit’s own moon.mod is written in.',
     after: 'the TOML 1.0.0 specification',
   },
   {
     name: 'moonschema',
     group: 'format',
-    docs: 'moonschema',
     blurb: 'JSON Schema validation across all five drafts. It validates; it does not parse.',
     after: 'the JSON Schema specification',
   },
   {
     name: 'moonxml',
     group: 'format',
-    docs: 'moonxml',
     blurb: 'Tag documents parsed, queried by XPath and CSS, edited, and written back.',
     after: 'lxml and BeautifulSoup',
   },
   {
     name: 'moonmedia',
     group: 'format',
-    docs: 'moonmedia',
     blurb: 'Streaming playlists and containers: m3u8, MPD, MPEG-TS, fragmented MP4, RTMP.',
     after: 'RFC 8216 and ISO/IEC 23009-1',
   },
   {
     name: 'moonregex',
     group: 'format',
-    docs: 'moonregex',
     blurb: 'Python’s re, the regex superset behind it, and the dialect JSON Schema means.',
     after: 're, mrab-regex, and ECMA-262 §22.2',
   },
   {
     name: 'moonfory',
     group: 'format',
-    docs: 'moonfory',
     blurb: 'A value written so that Java, Go or Python reads it back as its own.',
     after: 'Apache Fory',
   },
   {
     name: 'moonzip',
     group: 'format',
-    docs: 'moonzip',
     blurb: 'DEFLATE, the zlib and gzip containers built on it, and the ZIP archive.',
     after: 'RFC 1950 to 1952, and the ZIP appnote',
   },
   {
     name: 'moonbase',
     group: 'format',
-    docs: 'moonbase',
     blurb: 'base16, base32, base36, base58, base62 and base64, then bech32, base58check and multibase.',
     after: 'RFC 4648, and the alphabets that grew up outside it',
   },
   {
     name: 'moonvar',
     group: 'format',
-    docs: 'moonvar',
     blurb: 'How a number becomes bytes and back, fixed width and variable length alike.',
     after: 'the four protocol families that each define it differently',
   },
@@ -276,49 +259,42 @@ export const packages = [
   {
     name: 'moonseal',
     group: 'base',
-    docs: 'moonseal',
     blurb: 'Seal a file for several people at once; any one of them opens it.',
     after: 'age',
   },
   {
     name: 'mooncred',
     group: 'base',
-    docs: 'mooncred',
     blurb: 'Credential formats: JSON Web Tokens, the keys they are verified with, ASN.1 and X.509.',
     after: 'the JOSE, ASN.1 and PKIX specifications',
   },
   {
     name: 'moondate',
     group: 'base',
-    docs: 'moondate',
     blurb: 'Dates, times, instants, durations and cron expressions.',
     after: 'Python’s datetime',
   },
   {
     name: 'moonlog',
     group: 'base',
-    docs: 'moonlog',
     blurb: 'A level, a message, fields carried as values, and a seam to write through.',
     after: 'serlog',
   },
   {
     name: 'moonpool',
     group: 'base',
-    docs: 'moonpool',
     blurb: 'Resource pools, backoff and flow control — the bookkeeping every client rewrites.',
   },
 
   {
     name: 'moonraft',
     group: 'systems',
-    docs: 'moonraft',
     blurb: 'A function-by-function port of etcd-io/raft, fully covered by tests.',
     after: 'etcd-io/raft',
   },
   {
     name: 'moonkoog',
     group: 'systems',
-    docs: 'moonkoog',
     blurb: 'Agent orchestration: strategy graphs, tools, structured output, retrieval and MCP.',
     after: 'JetBrains Koog',
   },
@@ -326,7 +302,6 @@ export const packages = [
   {
     name: 'moonetui',
     group: 'ui',
-    docs: 'moonetui',
     blurb: 'Terminal user interfaces: cell buffers, diffed output, layout, widgets and drivers.',
     after: 'Textual',
   },
@@ -398,34 +373,29 @@ export const packages = [
   {
     name: 'moonmime',
     group: 'format',
-    docs: 'moonmime',
     blurb: 'moonmime — the MIME family for MoonBit: media types and their parameters, the extension-to-type registry, Content-Disposition, multipart bodies and multipart/form-data, each read and written from bytes. No sockets, no files.',
   },
   // Added from the organisation.
   {
     name: 'moonsver',
     group: 'format',
-    docs: 'moonsver',
     blurb: 'Semantic Versioning 2.0.0: parsing, printing, precedence, bumping and version ranges, with the range grammar of npm, Cargo, Ruby or the strict spec as a parameter.',
   },
   // Added from the organisation.
   {
     name: 'moonurl',
     group: 'format',
-    docs: 'moonurl',
     blurb: 'URI references as RFC 3986 defines them: parsing, recomposing, resolving and percent coding by component, and data URLs.',
   },
   // Added from the organisation.
   {
     name: 'moonward',
     group: 'base',
-    docs: 'moonward',
     blurb: 'Resilience without I/O: circuit breaking, adaptive load shedding, rate limits, backoff and deadlines, with the clock and the randomness passed in.',
   },
   {
     name: 'moonmcp',
     group: 'web',
-    docs: 'moonmcp',
     blurb: 'Model Context Protocol servers and clients: the wire model, tools, resources and prompts.',
     after: 'FastMCP and the MCP specification',
   },
@@ -434,7 +404,6 @@ export const packages = [
   {
     name: 'moonucd',
     group: 'base',
-    docs: 'moonucd',
     blurb: 'Unicode character database for MoonBit: categories, properties, case mapping and folding, generated from the UCD.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -442,7 +411,6 @@ export const packages = [
   {
     name: 'moonuuid',
     group: 'base',
-    docs: 'moonuuid',
     blurb: 'UUIDs for MoonBit: parse every spelling, make versions 1 to 8, generate over your own clock and randomness.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -450,7 +418,6 @@ export const packages = [
   {
     name: 'moonnum',
     group: 'base',
-    docs: 'moonnum',
     blurb: 'moonnum — Python\'s numbers for MoonBit: arbitrary-precision integers, floats, complex numbers and fractions, read, written and formatted the way Python reads, writes and formats them.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -458,7 +425,6 @@ export const packages = [
   {
     name: 'moonimage',
     group: 'base',
-    docs: 'moonimage',
     blurb: 'Image codecs for MoonBit: PNG, QOI, BMP, TGA, JPEG, GIF and WebP, and the pixel arithmetic between them.',
   },
   // Added from the organisation. Its group is a guess — a repository
@@ -535,6 +501,27 @@ export const packages = [
     group: 'base',
     blurb: 'Protocol Buffers for MoonBit: runtime, reflection, JSON and text formats, and the protoc plugin.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moongraph',
+    group: 'base',
+    blurb: 'Graphs for MoonBit: representations and the algorithms on them.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonstl',
+    group: 'base',
+    blurb: 'Data structures and algorithms the MoonBit core library leaves out.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moontel',
+    group: 'base',
+    blurb: 'Metrics and traces for MoonBit: Prometheus and OpenMetrics exposition, W3C trace context.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
@@ -550,16 +537,19 @@ export interface Entry extends Pkg {
   readonly haystack: string
 }
 
-// The version is not written down here: `versions.json` holds what mooncakes
-// reports, refreshed by `scripts/versions.mjs`, so a release elsewhere never
-// needs an edit to this file.
+// Neither the version nor the site is written down here: `versions.json` holds
+// what mooncakes reports and `sites.json` the homepage each repository names,
+// both refreshed by `scripts/catalogue.mjs`, so a release or a new site
+// elsewhere never needs an edit to this file.
 export const entries: readonly Entry[] = packages.map((pkg: Pkg): Entry => {
   const version = (versions as Record<string, string>)[pkg.name]
   return {
     ...pkg,
     version,
     repoUrl: `https://github.com/moonbitstack/${repoOf(pkg)}`,
-    docsUrl: pkg.docs && `https://moonbitstack.github.io/${pkg.docs}${pkg.docs.endsWith('.html') ? '' : '/'}`,
+    docsUrl: pkg.docs
+      ? `https://moonbitstack.github.io/${pkg.docs}${pkg.docs.endsWith('.html') ? '' : '/'}`
+      : (sites as Record<string, string>)[repoOf(pkg)],
     modUrl: version && `https://mooncakes.io/docs/moonbitstack/${pkg.name}`,
     planned: !version && !pkg.unpublished,
     haystack: `${pkg.name} ${pkg.blurb} ${pkg.after ?? ''}`.toLowerCase(),

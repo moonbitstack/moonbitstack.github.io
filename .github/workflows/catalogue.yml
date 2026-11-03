@@ -2,8 +2,9 @@ name: catalogue
 
 # The page already takes its versions from mooncakes at build time, so it is
 # never stale. This is what stops the files behind it from drifting: a version
-# that moved on, or a repository in the organisation that no entry names. One
-# pull request, reused, so a month of releases is one review.
+# that moved on, a homepage a repository now names, or a repository in the
+# organisation that no entry names. One pull request, reused, so a month of
+# releases is one review.
 on:
   repository_dispatch:
     types: [released]
@@ -37,12 +38,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- src/data/versions.json src/data/packages.ts; then
+          if git diff --quiet -- src/data/versions.json src/data/sites.json src/data/packages.ts; then
             echo "nothing moved"; exit 0
           fi
-          # Only those two may change, and the catalogue only by growing: the
+          # Only those three may change, and the catalogue only by growing: the
           # script appends a new entry and never edits one.
-          if [ -n "$(git diff --name-only -- . ':!src/data/versions.json' ':!src/data/packages.ts')" ]; then
+          if [ -n "$(git diff --name-only -- . ':!src/data/versions.json' ':!src/data/sites.json' ':!src/data/packages.ts')" ]; then
             echo "::error::something outside the catalogue changed"; git diff --stat; exit 1
           fi
           if [ -n "$(git diff -U0 -- src/data/packages.ts | grep -E '^-[^-]')" ]; then
@@ -51,7 +52,7 @@ jobs:
           git config user.name "moonbitstack-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -B bot/versions
-          git commit -sm "chore(site): follow the registry and the organisation." -- src/data/versions.json src/data/packages.ts
+          git commit -sm "chore(site): follow the registry and the organisation." -- src/data/versions.json src/data/sites.json src/data/packages.ts
           git push --force origin bot/versions
           echo "pushed=true" >> "$GITHUB_OUTPUT"
           if [ -z "$(gh pr list --head bot/versions --state open --json number --jq '.[].number')" ]; then
@@ -63,7 +64,7 @@ jobs:
       # Merged without a person only when it is provably this workflow's own:
       # opened by the Actions bot from a branch of this repository (never a
       # fork), every commit by the bot account above, nothing touched but the
-      # two catalogue files, and the catalogue only growing. Anything else
+      # three catalogue files, and the catalogue only growing. Anything else
       # stays open for review.
       - name: merge it when it is ours
         # Only right after this run pushed: an older pull request still open
@@ -84,7 +85,7 @@ jobs:
           if [ "$owner/$repo" != "$GITHUB_REPOSITORY" ]; then
             echo "head is $owner/$repo, not this repository; left for review"; exit 0
           fi
-          others=$(echo "$view" | jq -r '.files[].path' | grep -vxE 'src/data/versions\.json|src/data/packages\.ts' || true)
+          others=$(echo "$view" | jq -r '.files[].path' | grep -vxE 'src/data/versions\.json|src/data/sites\.json|src/data/packages\.ts' || true)
           if [ -n "$others" ]; then
             echo "touches $others; left for review"; exit 0
           fi
