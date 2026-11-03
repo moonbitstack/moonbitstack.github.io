@@ -522,6 +522,12 @@ export const packages = [
     group: 'base',
     blurb: 'Metrics and traces for MoonBit: Prometheus and OpenMetrics exposition, W3C trace context.',
   },
+  // Added from the organisation.
+  {
+    name: 'moonp8s',
+    group: 'web',
+    blurb: 'Prometheus metrics for MoonBit.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
