@@ -515,12 +515,17 @@ export const packages = [
     group: 'base',
     blurb: 'Data structures and algorithms the MoonBit core library leaves out.',
   },
-  // Added from the organisation. Its group is a guess — a repository
-  // topic naming one would have said where it belongs.
+  {
+    name: 'moonp8s',
+    group: 'web',
+    blurb: 'Prometheus metrics: every metric kind, labelled families, and the text and OpenMetrics formats.',
+    after: 'the Prometheus clients',
+  },
   {
     name: 'moontel',
-    group: 'base',
-    blurb: 'Metrics and traces for MoonBit: Prometheus and OpenMetrics exposition, W3C trace context.',
+    group: 'web',
+    blurb: 'OpenTelemetry: traces, context propagation and OTLP export.',
+    after: 'the OpenTelemetry specification',
   },
   // Added from the organisation.
   {
