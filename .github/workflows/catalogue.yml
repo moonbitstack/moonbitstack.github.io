@@ -49,8 +49,11 @@ jobs:
           if [ -n "$(git diff -U0 -- src/data/packages.ts | grep -E '^-[^-]')" ]; then
             echo "::error::the catalogue lost a line"; git diff -- src/data/packages.ts; exit 1
           fi
-          git config user.name "moonbitstack-bot"
-          git config user.email "bot@users.noreply.github.com"
+          # The account GitHub already credits for this token. Any other address
+          # becomes a co-author on the squash, and a noreply address belongs to
+          # whichever user holds that name.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B bot/versions
           git commit -sm "chore(site): follow the registry and the organisation." -- src/data/versions.json src/data/sites.json src/data/packages.ts
           git push --force origin bot/versions
@@ -89,7 +92,7 @@ jobs:
           if [ -n "$others" ]; then
             echo "touches $others; left for review"; exit 0
           fi
-          strangers=$(echo "$view" | jq -r '.commits[].authors[].email' | grep -vx 'bot@users.noreply.github.com' || true)
+          strangers=$(echo "$view" | jq -r '.commits[].authors[].email' | grep -vxF '41898282+github-actions[bot]@users.noreply.github.com' || true)
           if [ -n "$strangers" ]; then
             echo "commits by $strangers; left for review"; exit 0
           fi
