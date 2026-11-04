@@ -36,7 +36,7 @@
   "moonpool": "0.3.3",
   "moonpostgres": "0.6.8",
   "moonpug": "0.1.4",
-  "moonquic": "0.3.10",
+  "moonquic": "0.3.11",
   "moonraft": "0.7.4",
   "moonrand": "0.1.2",
   "moonredis": "0.1.2",
