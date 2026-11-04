@@ -30,7 +30,7 @@
   "moonmodel": "0.1.2",
   "moonmysql": "0.7.8",
   "moonnet": "0.1.9",
-  "moonnum": "0.2.2",
+  "moonnum": "0.2.3",
   "moonorm": "0.11.6",
   "moonpool": "0.3.3",
   "moonpostgres": "0.6.8",
