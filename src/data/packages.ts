@@ -533,6 +533,20 @@ export const packages = [
     group: 'web',
     blurb: 'Prometheus metrics for MoonBit.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonip',
+    group: 'base',
+    blurb: 'IP addresses and networks for MoonBit: IPv4, IPv6, prefixes and how to classify them.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moontask',
+    group: 'base',
+    blurb: 'Task queues and schedules for MoonBit: workers, retries, beats, workflows, and a console.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
