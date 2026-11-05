@@ -603,6 +603,13 @@ export const packages = [
     group: 'base',
     blurb: 'JSON-RPC 2.0 for MoonBit: messages, a method table, two-way calls and framing.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonjrpc',
+    group: 'base',
+    blurb: 'JSON-RPC 2.0 for MoonBit: messages, a method table, two-way calls and framing.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
