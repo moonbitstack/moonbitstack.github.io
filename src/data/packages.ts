@@ -547,6 +547,48 @@ export const packages = [
     group: 'base',
     blurb: 'Task queues and schedules for MoonBit: workers, retries, beats, workflows, and a console.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moona2a',
+    group: 'base',
+    blurb: 'The Agent2Agent protocol for MoonBit: agent cards, tasks, streaming and push notifications.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonmd',
+    group: 'base',
+    blurb: 'Markdown for MoonBit: CommonMark and GFM, whole or as it streams in.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonmuse',
+    group: 'base',
+    blurb: 'Talk to language models from MoonBit: one contract for chat, streaming, tools and embeddings, with a subpackage per provider.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonrag',
+    group: 'base',
+    blurb: 'Documents, splitting, vector stores and retrieval for MoonBit.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonskills',
+    group: 'base',
+    blurb: 'Agent Skills for MoonBit: discover, read and validate SKILL.md.',
+  },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonstate',
+    group: 'base',
+    blurb: 'Durable state graphs for MoonBit: nodes, merging, checkpoints, interrupts and resume.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
