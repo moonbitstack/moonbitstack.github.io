@@ -617,6 +617,13 @@ export const packages = [
     group: 'base',
     blurb: 'Agent Skills for MoonBit: discover, read and validate SKILL.md.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonmcl',
+    group: 'base',
+    blurb: 'MoonBit Motion Control Library: a pure MoonBit collection of classical and modern motion control algorithms.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
