@@ -57,7 +57,7 @@
   "moonschema": "0.2.4",
   "moonsd": "0.1.1",
   "moonseal": "0.1.4",
-  "moonseed": "0.1.1",
+  "moonseed": "0.1.2",
   "moonskill": "0.1.0",
   "moonsqlite": "0.3.6",
   "moonstate": "0.1.0",
@@ -74,7 +74,7 @@
   "moonvar": "0.2.2",
   "moonward": "0.2.3",
   "moonxml": "0.1.4",
-  "moonyaml": "0.1.4",
+  "moonyaml": "0.1.5",
   "moonzero": "0.14.8",
   "moonzip": "0.3.7"
 }
