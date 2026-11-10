@@ -624,6 +624,13 @@ export const packages = [
     group: 'base',
     blurb: 'MoonBit Motion Control Library: a pure MoonBit collection of classical and modern motion control algorithms.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonknob',
+    group: 'base',
+    blurb: 'Which of two settings wins, and what to do when they disagree: the precedence every moonbitstack library shares.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
