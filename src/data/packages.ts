@@ -652,6 +652,13 @@ export const packages = [
     group: 'base',
     blurb: 'Published under the organisation; nothing written down about it yet.',
   },
+  // Added from the organisation. Its group is a guess — a repository
+  // topic naming one would have said where it belongs.
+  {
+    name: 'moonckdb',
+    group: 'base',
+    blurb: 'Published under the organisation; nothing written down about it yet.',
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
