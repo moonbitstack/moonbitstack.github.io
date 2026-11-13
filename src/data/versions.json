@@ -7,6 +7,7 @@
   "moonbase": "0.5.0",
   "mooncat": "0.20.0",
   "moonchdb": "0.0.1",
+  "moonckdb": "0.0.1",
   "moonconf": "0.2.0",
   "moonconsul": "0.1.4",
   "mooncred": "0.7.0",
