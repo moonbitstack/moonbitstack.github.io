@@ -45,7 +45,7 @@
   "moonmysql": "0.8.0",
   "moonnet": "0.1.12",
   "moonnum": "0.3.0",
-  "moonorm": "0.11.10",
+  "moonorm": "0.12.0",
   "moonp8s": "0.1.2",
   "moonpool": "0.4.0",
   "moonpostgres": "0.7.0",
