@@ -12,7 +12,7 @@
   "moonconf": "0.2.0",
   "moonconsul": "0.2.0",
   "mooncred": "0.7.1",
-  "mooncrypt": "0.5.0",
+  "mooncrypt": "0.5.1",
   "moonctl": "0.13.0",
   "moondate": "0.2.0",
   "moondb": "0.3.0",
