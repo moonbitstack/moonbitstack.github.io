@@ -24,8 +24,8 @@ const tagline = 'A stack of MoonBit libraries: web services, data, protocols, su
       </p>
     </div>
     <p class="tally">
-      {counts.all} modules in all. {counts.published} are published. {counts.planned} have their design
-      settled and no code yet. Two are not published: the template every repository starts
+      {counts.all} modules in all. {counts.published} are published, {counts.lts} of them on long-term
+      support. {counts.planned} have their design settled and no release yet. Two are not published: the template every repository starts
       from, and an example that runs nine of them at once.
     </p>
   </header>
@@ -40,7 +40,7 @@ const tagline = 'A stack of MoonBit libraries: web services, data, protocols, su
   <footer>
     Everything here is Apache-2.0, published on mooncakes under <code>moonbitstack/</code>, and
     developed at <a href="https://github.com/moonbitstack">github.com/moonbitstack</a>. A module
-    marked <em>in design</em> has a repository and a written specification; the implementation has
-    not started.
+    marked <em>LTS</em> has a settled interface: its later releases fix bugs. A
+    module marked <em>in design</em> has a written specification and no release yet.
   </footer>
 </Base>

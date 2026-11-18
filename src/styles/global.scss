@@ -236,6 +236,17 @@ section[id] {
     font-variant-numeric: oldstyle-nums;
   }
 
+  // The one mark a settled module wears: small capitals in the accent, beside
+  // the version rather than on a badge of its own.
+  .lts {
+    margin-left: 6px;
+    color: var(--mark);
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: help;
+  }
+
   p {
     margin: 0;
     max-width: 40ch;
@@ -374,4 +385,10 @@ footer {
   * {
     transition: none !important;
   }
+}
+
+// Planned modules not yet announced, and the groups made only of them, wait
+// for the full page.
+html:not([data-full]) .unlisted {
+  display: none;
 }

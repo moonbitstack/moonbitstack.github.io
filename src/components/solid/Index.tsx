@@ -6,15 +6,22 @@
 // whole catalogue is in the HTML and reads with the runtime switched off.
 
 import { createEffect, createMemo, createSignal, For, Show } from 'solid-js'
-import { byGroup, entries, groups, type Entry } from '../../data/packages'
+import { byGroup, entries, groups, unlistedGroups, type Entry } from '../../data/packages'
 
 function Item(props: { readonly entry: Entry }) {
   const entry = props.entry
   return (
-    <article class={entry.planned ? 'item unwritten' : 'item'}>
+    <article class={['item', entry.planned && 'unwritten', entry.unlisted && 'unlisted'].filter(Boolean).join(' ')}>
       <h3>
-        <a href={entry.repoUrl}>{entry.name}</a>
-        <span class="state">{entry.version ?? (entry.planned ? 'in design' : entry.unpublished)}</span>
+        <Show when={!entry.unlisted} fallback={entry.name}>
+          <a href={entry.repoUrl}>{entry.name}</a>
+        </Show>
+        <span class="state">
+          {entry.version ?? (entry.planned ? 'in design' : entry.unpublished)}
+          <Show when={entry.lts}>
+            <abbr class="lts" title="long-term support: the interface is settled, releases fix bugs">LTS</abbr>
+          </Show>
+        </span>
       </h3>
       <p>{entry.blurb}</p>
       <Show when={entry.after}>{after => <p class="after">after {after()}</p>}</Show>
@@ -30,12 +37,14 @@ function Item(props: { readonly entry: Entry }) {
 
 export default function Index() {
   const [query, setQuery] = createSignal('')
+  // The full page is a state of the document, set before paint by the layout;
+  // a search looks at what the page shows, so it reads the same state.
+  const pool = () =>
+    document.documentElement.hasAttribute('data-full') ? entries : entries.filter(entry => !entry.unlisted)
 
   const hits = createMemo(() => {
     const words = query().toLowerCase().split(/\s+/).filter(Boolean)
-    return words.length === 0
-      ? null
-      : entries.filter(entry => words.every(word => entry.haystack.includes(word)))
+    return words.length === 0 ? null : pool().filter(entry => words.every(word => entry.haystack.includes(word)))
   })
 
   createEffect(() => {
@@ -55,7 +64,7 @@ export default function Index() {
         <Show when={hits()}>
           {found => (
             <span class="count">
-              {found().length} of {entries.length}
+              {found().length} of {pool().length}
             </span>
           )}
         </Show>
@@ -79,7 +88,7 @@ export default function Index() {
       <div class="strata">
         <For each={groups}>
           {group => (
-            <section id={group.id}>
+            <section id={group.id} class={unlistedGroups.has(group.id) ? 'unlisted' : undefined}>
               <header class="layer">
                 <h2>{group.title}</h2>
                 <p>{group.note}</p>

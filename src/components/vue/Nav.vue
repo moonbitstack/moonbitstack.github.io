@@ -5,7 +5,7 @@
 // Pug is a simplification rather than a costume.
 
 import { onMounted, onUnmounted, ref } from 'vue'
-import { groups } from '../../data/packages'
+import { groups, unlistedGroups } from '../../data/packages'
 
 const here = ref<string>(groups[0].id)
 let watcher: IntersectionObserver | undefined
@@ -35,7 +35,7 @@ nav.rail(aria-label="Layers")
     v-for="group in groups"
     :key="group.id"
     :href="`#${group.id}`"
-    :class="{ here: here === group.id }"
+    :class="{ here: here === group.id, unlisted: unlistedGroups.has(group.id) }"
   ) {{ group.title }}
 </template>
 

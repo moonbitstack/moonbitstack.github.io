@@ -26,6 +26,13 @@ const { title, description } = Astro.props
         const saved = localStorage.getItem('theme')
         if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved
       } catch {}
+      // The full page, planned modules and all, is reached by `#full` and kept
+      // for the visit: the anchors of the groups move the hash on afterwards.
+      const full = () => {
+        if (location.hash === '#full') document.documentElement.setAttribute('data-full', '')
+      }
+      full()
+      addEventListener('hashchange', full)
     </script>
   </head>
   <body>
