@@ -64,7 +64,7 @@
   "moonrpc": "0.22.2",
   "moonschema": "0.3.0",
   "moonsd": "0.2.0",
-  "moonseal": "0.2.0",
+  "moonseal": "0.2.1",
   "moonseed": "0.2.1",
   "moonskill": "0.2.0",
   "moonsqlite": "0.4.0",
