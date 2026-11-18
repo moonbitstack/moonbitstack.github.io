@@ -959,6 +959,13 @@ export const packages = [
     after: 'parsec, megaparsec and FParsec',
     unlisted: true,
   },
+  {
+    name: 'moontest',
+    group: 'base',
+    blurb: 'A test framework: cases, fixtures, parametrisation and reports as one contract, with unit, integration, differential, property and interface tests as plugins.',
+    after: 'pytest, Jest, JUnit and QuickCheck',
+    unlisted: true,
+  },
 ] as const satisfies readonly Pkg[]
 
 export const repoOf = (pkg: Pkg): string => pkg.repo ?? pkg.name
