@@ -789,6 +789,13 @@ export const packages = [
     unlisted: true,
   },
   {
+    name: 'moon2n',
+    group: 'infer',
+    blurb: 'WebNN: build a graph once, run it on the NPU through the browser where there is one and on moonggml everywhere else.',
+    after: 'the W3C WebNN specification',
+    unlisted: true,
+  },
+  {
     name: 'moonjax',
     group: 'learn',
     blurb: 'Composable function transforms: automatic differentiation, vectorisation, compilation and parallel maps, with neural network layers in the NNX and Linen styles.',
